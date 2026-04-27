@@ -1,0 +1,32 @@
+{
+  "name": "@qzq/qzq-demo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "",
+  "author": "qzq",
+  "scripts": {
+    "dev": "vite --mode development",
+    "dev:release": "vite --mode release",
+    "build:master": "node --max_old_space_size=8192 ../../node_modules/vite/bin/vite.js build --mode master",
+    "build:release": "node --max_old_space_size=8192 ../../node_modules/vite/bin/vite.js build --mode release",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "2.3.1",
+    "@faker-js/faker": "8.4.1",
+    "axios": "0.28.1",
+    "echarts": "5.6.0",
+    "element-plus": "2.9.7",
+    "file-saver": "2.0.5",
+    "fuse.js": "6.6.2",
+    "js-cookie": "3.0.5",
+    "jsencrypt": "3.3.2",
+    "nprogress": "0.2.0",
+    "sass": "1.77.5",
+    "simplebar-vue": "2.4.0",
+    "swiper": "11.2.4",
+    "vite-plugin-compression": "0.5.1",
+    "vite-plugin-svg-icons": "2.0.1",
+    "vue3-seamless-scroll": "2.0.1"
+  }
+}

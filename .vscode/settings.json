@@ -1,0 +1,61 @@
+{
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}/src"
+  },
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.lineNumbers": "on", //打开行号
+  "editor.quickSuggestions": {
+    //开启自动显示建议
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "files.autoGuessEncoding": true,
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true, //让函数(名)和后面的括号之间加个空格
+  "emmet.triggerExpansionOnTab": true,
+  "files.associations": {
+    "*.js": "javascript",
+    "*.vue": "vue"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit"
+  },
+  "liveServer.settings.donotShowInfoMsg": true,
+  "editor.wordWrap": "on",
+  "files.enableTrash": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "prettier.trailingComma": "none",
+  "editor.suggestSelection": "first",
+  "prettier.semi": false,
+  "git.mergeEditor": false,
+  "eslint.enable": true,
+  "eslint.run": "onType",
+  "eslint.options": {
+    "extensions": [
+      ".js",
+      ".vue",
+    ]
+  },
+  // 操作时作为单词分隔符的字符
+  "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
+  "files.eol": "\n",
+  "explorer.compactFolders": false,
+   // 控制相关文件嵌套展示
+   "explorer.fileNesting.enabled": true,
+   "explorer.fileNesting.expand": false,
+   "explorer.fileNesting.patterns": {
+     "package.json": ".dockerignore,.editorconfig,.eslintignore,.eslintrc.js,.gitattributes,.gitignore,.npmrc,.prettierignore,.prettierrc.json,lint-staged.config.js,pnpm-lock.yaml,.prettierrc.js,commitlint.config.js,.nvmrc",
+     "README.md":"ci.sh,Dockerfile,Dockerfile.*,pnpm-workspace.yaml,nginx.conf,"
+   },
+}

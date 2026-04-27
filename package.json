@@ -1,0 +1,46 @@
+{
+  "name": "qzq-demo",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "preinstall": "node ./scripts/preinstall.js",
+    "postinstall": "husky install",
+    "pre-commit": "lint-staged",
+    "dev": "pnpm -r --parallel --filter @qzq/qzq-demo run dev",
+    "build_qzq-demo_local": "pnpm -r --parallel --filter @qzq/qzq-demo run build:master",
+    "build_qzq-demo_master": "pnpm -r --parallel --filter @qzq/qzq-demo run build:master",
+    "build_qzq-demo_release": "pnpm -r --parallel --filter @qzq/qzq-demo run build:release"
+  },
+  "dependencies": {
+    "@vitejs/plugin-legacy": "4.0.4",
+    "@vitejs/plugin-vue": "5.2.1",
+    "@vueuse/components": "12.0.0",
+    "@vueuse/core": "12.0.0",
+    "pinia": "2.3.0",
+    "unplugin-auto-import": "0.19.0",
+    "unplugin-vue-components": "0.28.0",
+    "vite": "6.0.13",
+    "vite-plugin-html-config": "2.0.2",
+    "vue": "3.5.13",
+    "vue-router": "4.5.0"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "1.2.0",
+    "@vue/eslint-config-prettier": "7.1.0",
+    "eslint": "8.34.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-vue": "9.11.0",
+    "husky": "8.0.2",
+    "inquirer": "9.1.5",
+    "lint-staged": "13.0.3",
+    "prettier": "2.8.4",
+    "rollup-plugin-visualizer": "5.9.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": "20.13.1"
+  }
+}

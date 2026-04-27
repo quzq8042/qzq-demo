@@ -1,0 +1,43 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+node_modules
+.DS_Store
+dist
+*.local
+!Dockerfile.local
+dist-ssr
+coverage
+
+
+/cypress/videos/
+/cypress/screenshots/
+/electron/src/
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+toolsindex.json
+ituiindex.json
+libsindex.json
+modulesindex.json
+itboxModule.json
+.vitepress/cache
+.vitepress/.temp
+.vitepress/dist
+
+stats.html
+
+cilocal.sh
