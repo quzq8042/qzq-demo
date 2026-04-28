@@ -25,6 +25,7 @@ export default defineConfig(({ mode, command }) => {
       port: 3001,
       host: true,
       open: true,
+      historyApiFallback: true, // 解决刷新页面404问题
       proxy: {
         '/dev-api': {
           target: `http://localhost:8080/`,

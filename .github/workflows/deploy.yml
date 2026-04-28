@@ -1,0 +1,28 @@
+name: Deploy Vue App to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]  # 你的默认分支如果是 master，改成 master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - run: npm ci
+      - run: npm run build  # 生成 dist 文件夹
+      
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+      
+      - uses: actions/deploy-pages@v4
