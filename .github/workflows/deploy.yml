@@ -20,7 +20,7 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
-      - run: pnpm ci
+      - run: pnpm install --frozen-lockfile
       - run: pnpm run build # 生成 dist 文件夹
 
       - uses: actions/upload-pages-artifact@v3
