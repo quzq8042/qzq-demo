@@ -8,7 +8,7 @@ export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, './mode')
   const { VITE_APP_ENV, VITE_APP_BASE_API } = env
   return {
-    base: VITE_APP_ENV === 'production' ? '/' : '/',
+    base: '/qzq-demo/',
     envDir: './mode',
     plugins: createVitePlugins(env, command === 'build'),
     resolve: {
