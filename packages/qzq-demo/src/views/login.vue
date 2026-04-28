@@ -80,7 +80,7 @@ function handleLogin() {
       }
       loginForm.value.username = loginForm.value.username.trim()
       // 调用action的登录方法
-      if (loginForm.value.username !== 'admin' && loginForm.value.password !== 'admin123') {
+      if (loginForm.value.username !== 'admin' || loginForm.value.password !== 'admin123') {
         ElMessage.error('账号或密码错误')
         loading.value = false
         return

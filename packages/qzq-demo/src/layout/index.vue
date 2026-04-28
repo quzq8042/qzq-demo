@@ -46,7 +46,7 @@ const handleLogout = () => {
   useUserStore()
     .logOut()
     .then(() => {
-      router.push({ path: '/' })
+      router.push({ path: '/login' })
     })
 }
 </script>
