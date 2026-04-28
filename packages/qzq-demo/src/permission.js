@@ -25,42 +25,43 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      if (useUserStore().roles.length === 0) {
-        isRelogin.show = true
-        // 判断当前用户是否已拉取完user_info信息
-        useUserStore()
-          .getInfo()
-          .then(() => {
-            isRelogin.show = false
-            usePermissionStore()
-              .generateRoutes()
-              .then((accessRoutes) => {
-                // 根据roles权限生成可访问的路由表
-                accessRoutes.forEach((route) => {
-                  if (!isHttp(route.path)) {
-                    router.addRoute(route) // 动态添加可访问路由表
-                  }
-                })
-                if (islimitModuleIndustrial()) {
-                  if (to.path.indexOf('/detail/') === 0) {
-                    next({ ...to, replace: true })
-                  } else {
-                    next({ path: '/industrial', replace: true }) // hack方法 确保addRoutes已完成
-                  }
-                } else {
-                  next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
-                }
-              })
-          })
-          .catch((err) => {
-            useUserStore()
-              .logOut()
-              .then(() => {
-                ElMessage.error(err)
-                next({ path: '/' })
-              })
-          })
-      } else if (limitModule(to.path)) {
+      // if (useUserStore().roles.length === 0) {
+      // isRelogin.show = true
+      // 判断当前用户是否已拉取完user_info信息
+      // useUserStore()
+      // .getInfo()
+      // .then(() => {
+      // isRelogin.show = false
+      // usePermissionStore()
+      //   .generateRoutes()
+      //   .then((accessRoutes) => {
+      //     // 根据roles权限生成可访问的路由表
+      //     accessRoutes.forEach((route) => {
+      //       if (!isHttp(route.path)) {
+      //         router.addRoute(route) // 动态添加可访问路由表
+      //       }
+      //     })
+      //     if (islimitModuleIndustrial()) {
+      //       if (to.path.indexOf('/detail/') === 0) {
+      //         next({ ...to, replace: true })
+      //       } else {
+      //         next({ path: '/industrial', replace: true }) // hack方法 确保addRoutes已完成
+      //       }
+      //     } else {
+      //       next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+      //     }
+      //   })
+      // })
+      // .catch((err) => {
+      //   useUserStore()
+      //     .logOut()
+      //     .then(() => {
+      //       ElMessage.error(err)
+      //       next({ path: '/' })
+      //     })
+      // })
+      // } else
+      if (limitModule(to.path)) {
         next({ path: '/' })
       } else {
         next()

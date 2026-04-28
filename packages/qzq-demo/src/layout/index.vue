@@ -1,21 +1,20 @@
 <template>
   <div class="app-container">
     <!-- 头部导航 -->
-    <!-- <header class="app-header">
+    <header class="app-header">
       <nav class="header-nav">
         <router-link v-for="route in navRoutes" :key="route.path" :to="route.path" class="nav-item" active-class="active">
           {{ route.meta.title }}
         </router-link>
       </nav>
-    </header> -->
+      <el-button type="primary" @click="handleLogout">退出登录</el-button>
+    </header>
 
     <div id="app-main">
       <router-view v-slot="{ Component, route }">
-        <transition name="fade-transform" mode="out-in">
-          <keep-alive :include="tagsViewStore.cachedViews">
-            <component :is="Component" v-if="!route.meta.link" :key="route.path" />
-          </keep-alive>
-        </transition>
+        <keep-alive :include="tagsViewStore.cachedViews">
+          <component :is="Component" v-if="!route.meta.link" :key="route.path" />
+        </keep-alive>
       </router-view>
     </div>
   </div>
@@ -25,6 +24,7 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import useTagsViewStore from '@/store/modules/tagsView'
+import { ElButton } from 'element-plus'
 
 const tagsViewStore = useTagsViewStore()
 const router = useRouter()
@@ -41,13 +41,22 @@ const navRoutes = computed(() => {
     })
     .filter((route) => route.meta && route.meta.title)
 })
+import useUserStore from '@/store/modules/user'
+const handleLogout = () => {
+  useUserStore()
+    .logOut()
+    .then(() => {
+      router.push({ path: '/' })
+    })
+}
 </script>
 
 <style lang="scss" scoped>
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .app-header {

@@ -1,21 +1,22 @@
 import request from '@/utils/request'
-
+import { mockRequest } from '@/mock/mock.js'
 // 登录方法
-export function login(username, password, code, uuid) {
+export function login(userInfo) {
   const data = {
-    username,
-    password,
-    code,
-    uuid,
+    username: userInfo.username,
+    password: userInfo.password,
   }
-  return request({
-    url: '/login',
-    headers: {
-      isToken: false,
-      repeatSubmit: false,
-    },
-    method: 'post',
-    data: data,
+  // return request({
+  //   url: '/login',
+  //   headers: {
+  //     isToken: false,
+  //     repeatSubmit: false,
+  //   },
+  //   method: 'post',
+  //   data: data,
+  // })
+  return mockRequest({
+    token: '123456',
   })
 }
 
@@ -41,10 +42,11 @@ export function getInfo() {
 
 // 退出方法
 export function logout() {
-  return request({
-    url: '/logout',
-    method: 'post',
-  })
+  // return request({
+  //   url: '/logout',
+  //   method: 'post',
+  // })
+  return mockRequest({})
 }
 
 // 获取验证码

@@ -14,9 +14,9 @@
               <div class="contact-item">工作年限：{{ resumeData.workExperience }}</div>
             </div>
           </div>
-          <!-- <div class="avatar">
+          <div class="avatar">
             <Avatar :text="resumeData.name" :size="100" />
-          </div> -->
+          </div>
         </div>
       </header>
 
@@ -39,14 +39,14 @@
             工作经验
           </h2>
           <div class="section-content">
-            <div class="timeline-item" v-for="(exp, index) in resumeData.experience" :key="index">
+            <div v-for="(exp, index) in resumeData.experience" :key="index" class="timeline-item">
               <!-- <div class="timeline-date"></div> -->
               <div class="timeline-content">
                 <h3>
                   {{ exp.company }}<span>{{ exp.date }}</span
                   ><span>{{ exp.position }}</span>
                 </h3>
-                <div class="timeline-desc" v-for="(desc, idx) in exp.description" :key="idx">
+                <div v-for="(desc, idx) in exp.description" :key="idx" class="timeline-desc">
                   {{ desc }}
                 </div>
               </div>
@@ -61,7 +61,7 @@
             项目经历
           </h2>
           <div class="section-content">
-            <div class="project-item" v-for="(project, index) in resumeData.projects" :key="index">
+            <div v-for="(project, index) in resumeData.projects" :key="index" class="project-item">
               <h3>项目{{ numMap[index + 1] }}：{{ project.name }}</h3>
               <p class="project-desc">
                 技术栈：<span v-for="(tag, idx) in project.technologies" :key="idx"
@@ -69,7 +69,7 @@
                 >
               </p>
               <p class="project-desc">项目描述：{{ project.description }}</p>
-              <div class="timeline-desc" v-for="(desc, idx) in project.experience" :key="idx">
+              <div v-for="(desc, idx) in project.experience" :key="idx" class="timeline-desc">
                 {{ desc }}
               </div>
             </div>
@@ -83,7 +83,7 @@
             教育背景
           </h2>
           <div class="section-content">
-            <div class="timeline-item">
+            <div class="timeline-items">
               <div class="timeline-date">{{ resumeData.education.date }}</div>
               <div class="education">
                 {{ resumeData.education.institution }}<span>{{ resumeData.education.fieldOfStudy }}</span>
@@ -247,13 +247,14 @@ const handleClick = (link) => {
 
 /* 时间线样式 */
 .timeline-item {
-  display: flex;
-  gap: 10px;
   margin-bottom: 10px;
 
   &:last-child {
     margin-bottom: 0;
   }
+}
+.timeline-items {
+  display: flex;
 }
 
 .timeline-date {
@@ -352,9 +353,7 @@ const handleClick = (link) => {
   align-items: center;
   justify-content: space-between;
   font-size: 16px;
+  color: #666;
   margin-left: 30px;
-  span {
-    color: #666;
-  }
 }
 </style>

@@ -1,7 +1,7 @@
 <!-- 前端A: http://localhost:5173 -->
 <template>
   <div class="app-a">
-    <h2>前端页面B (端口: 3001)</h2>
+    <h2>前端页面 A (端口: 5173)</h2>
 
     <div class="status">
       <div>
@@ -14,8 +14,8 @@
 
     <div class="message-area">
       <input v-model="targetId" placeholder="目标客户端ID (留空则广播)" type="number" />
-      <input v-model="inputMessage" @keyup.enter="sendMessage" placeholder="输入消息" />
-      <button @click="sendMessage" :disabled="!isConnected">发送消息</button>
+      <input v-model="inputMessage" placeholder="输入消息" @keyup.enter="sendMessage" />
+      <button :disabled="!isConnected" @click="sendMessage">发送消息</button>
     </div>
 
     <div class="messages">
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 const WS_URL = 'ws://localhost:3003' // 连接中转服务器
 const ws = ref(null)
@@ -119,7 +119,7 @@ onMounted(() => {
         break
 
       case 'pong':
-        console.log('心跳响应')
+        // console.log('心跳响应')
         break
     }
   }

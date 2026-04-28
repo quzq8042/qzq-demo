@@ -28,7 +28,6 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/',
-    hidden: true,
     redirect: '/index',
     component: Layout,
     children: [
@@ -36,19 +35,64 @@ export const constantRoutes = [
         path: '/index',
         component: () => import('@/views/home/index'),
         name: 'Home',
-        meta: { title: 'Tab1', icon: 'dashboard', affix: true },
+        meta: { title: '个人简历', icon: 'dashboard', affix: true },
       },
       {
         path: '/portfolio',
         component: () => import('@/views/portfolio/index'),
         name: 'Portfolio',
-        meta: { title: 'Tab2', icon: 'dashboard', affix: true },
-      },
-      {
-        path: '/websocket',
-        component: () => import('@/views/websocket/index'),
-        name: 'WebSocket',
-        meta: { title: 'Tab3', icon: 'dashboard', affix: true },
+        redirect: '/portfolio/structure-chart',
+        meta: { title: '作品集', icon: 'dashboard', affix: true },
+        children: [
+          {
+            path: '/portfolio/structure-chart',
+            component: () => import('@/views/portfolio/components/structure-chart/index'),
+            name: 'StructureChart',
+            meta: { title: '股权穿透图', icon: 'dashboard' },
+          },
+          {
+            path: '/portfolio/steps',
+            component: () => import('@/views/portfolio/components/steps/index'),
+            name: 'Steps',
+            meta: { title: '步骤条', icon: 'dashboard' },
+          },
+          {
+            path: '/portfolio/drag',
+            component: () => import('@/views/portfolio/components/drag/index'),
+            name: 'Drag',
+            meta: { title: '简单拖拽', icon: 'dashboard' },
+          },
+          {
+            path: '/portfolio/drag-kcb',
+            component: () => import('@/views/portfolio/components/drag-kcb/index'),
+            name: 'DragKcb',
+            meta: { title: '拖拽-课程表', icon: 'dashboard' },
+          },
+          {
+            path: '/portfolio/fill',
+            component: () => import('@/views/portfolio/components/fill/index'),
+            name: 'Fill',
+            meta: { title: 'Excel文件-JSON', icon: 'dashboard' },
+          },
+          {
+            path: '/portfolio/websocket1',
+            component: () => import('@/views/portfolio/components/websocket1/index'),
+            name: 'WebSocket1',
+            meta: { title: 'WebSocket1', icon: 'dashboard' },
+          },
+          {
+            path: '/portfolio/websocket2',
+            component: () => import('@/views/portfolio/components/websocket2/index'),
+            name: 'WebSocket2',
+            meta: { title: 'WebSocket2', icon: 'dashboard' },
+          },
+          {
+            path: '/portfolio/websocket3',
+            component: () => import('@/views/portfolio/components/websocket3/index'),
+            name: 'WebSocket3',
+            meta: { title: 'WebSocket3', icon: 'dashboard' },
+          },
+        ],
       },
     ],
   },
@@ -57,6 +101,7 @@ export const constantRoutes = [
     component: () => import('@/views/login.vue'),
     name: 'Login',
     meta: { title: '登录', icon: 'login', affix: true },
+    hidden: true,
   },
   {
     path: '/:pathMatch(.*)*',

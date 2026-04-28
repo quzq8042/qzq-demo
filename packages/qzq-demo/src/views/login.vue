@@ -34,6 +34,7 @@ import Cookies from 'js-cookie'
 import { encrypt, decrypt, rsaEncrypt } from '@/utils/jsencrypt'
 import useUserStore from '@/store/modules/user'
 import { ref, onMounted, onUnmounted } from 'vue'
+import { ElMessage } from 'element-plus'
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -77,7 +78,13 @@ function handleLogin() {
         Cookies.remove('password')
         Cookies.remove('rememberMe')
       }
+      loginForm.value.username = loginForm.value.username.trim()
       // 调用action的登录方法
+      if (loginForm.value.username !== 'admin' && loginForm.value.password !== 'admin123') {
+        ElMessage.error('账号或密码错误')
+        loading.value = false
+        return
+      }
       userStore
         .login({
           ...loginForm.value,
