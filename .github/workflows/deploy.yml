@@ -17,11 +17,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '20.13.1'
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run build # 生成 dist 文件夹
+      - run: pnpm run build_qzq-demo_master # 生成 dist 文件夹
 
       - uses: actions/upload-pages-artifact@v3
         with:
