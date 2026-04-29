@@ -2,13 +2,28 @@
   <div class="files-page-box">
     <div>
       <div class="btns-box">
-        <el-button class="btn-up" @click="createFileInput()">上传文件</el-button>
+        <el-button class="btn-up" :disabled="isLoading" @click="createFileInput()">
+          <span v-if="isLoading" class="loading-icon">
+            <svg class="circular" viewBox="25 25 50 50">
+              <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+          {{ isLoading ? '加载中...' : '上传文件' }}
+        </el-button>
+      </div>
+      <div v-if="isLoading" class="loading-tip">
+        <el-progress :percentage="loadProgress" :status="loadStatus"></el-progress>
+        <span class="load-text">{{ loadingText }}</span>
       </div>
     </div>
     <div class="file-box">
       <div class="file-list">
         <div class="file-list-title">文件查看器</div>
-        <div v-if="files">
+        <div v-if="isLoading" class="tree-loading">
+          <el-loading-spinner></el-loading-spinner>
+          <span>正在加载文件...</span>
+        </div>
+        <div v-else-if="files">
           <el-tree style="max-width: 600px" :data="files" :props="defaultProps" @node-click="handleNodeClick">
             <template #default="{ node }">
               <span class="file-tree-node">
@@ -54,12 +69,89 @@ const getFileType = computed(() => (path) => {
 
 // ==========文件目录start ==================
 const files = ref(null)
+const isLoading = ref(false)
+const loadProgress = ref(0)
+const loadStatus = ref('active')
+const loadingText = ref('')
+
 const createFileInput = async () => {
-  // file api
-  // 句柄
-  const handle = await showDirectoryPicker()
-  await processHandle(handle)
-  files.value = handle.children
+  try {
+    const handle = await showDirectoryPicker()
+
+    // 开始加载状态
+    isLoading.value = true
+    loadProgress.value = 0
+    loadStatus.value = 'active'
+    loadingText.value = '正在解析文件夹...'
+
+    // 清空之前的文件列表
+    files.value = null
+
+    // 异步处理文件夹，不阻塞UI
+    await processHandleAsync(handle)
+
+    // 更新UI
+    files.value = handle.children
+
+    // 完成加载
+    loadProgress.value = 100
+    loadStatus.value = 'success'
+    loadingText.value = '加载完成'
+
+    // 延迟隐藏加载状态
+    setTimeout(() => {
+      isLoading.value = false
+      loadProgress.value = 0
+    }, 500)
+  } catch (error) {
+    console.error('加载文件夹失败:', error)
+    isLoading.value = false
+    loadStatus.value = 'exception'
+    loadingText.value = '加载失败'
+  }
+}
+
+const totalFiles = ref(0)
+const processedFiles = ref(0)
+
+const countFiles = async (handle) => {
+  if (handle.kind === 'file') {
+    totalFiles.value++
+    return
+  }
+  const values = await handle.values()
+  for await (const item of values) {
+    await countFiles(item)
+  }
+}
+
+const processHandleAsync = async (handle) => {
+  if (handle.kind === 'file') {
+    return
+  }
+
+  handle.children = []
+  const values = await handle.values()
+  const itemsArray = []
+
+  // 先收集所有子项
+  for await (const item of values) {
+    itemsArray.push(item)
+  }
+
+  // 并行处理子目录，提高性能
+  const promises = itemsArray.map(async (item) => {
+    handle.children.push(item)
+    await processHandleAsync(item)
+
+    // 更新进度
+    processedFiles.value++
+    if (totalFiles.value > 0) {
+      loadProgress.value = Math.min(95, Math.round((processedFiles.value / totalFiles.value) * 100))
+    }
+  })
+
+  await Promise.all(promises)
 }
 
 const processHandle = async (handle) => {
@@ -83,6 +175,7 @@ const defaultProps = {
 let FileEditorList = reactive({})
 let activeFileEditor = ref(null)
 const handleNodeClick = async (item) => {
+  if (isLoading.value) return
   if (item.kind === 'directory') {
     return
   }
@@ -267,6 +360,71 @@ onBeforeUpdate(() => {
     input::placeholder {
       color: #c0c4cc;
     }
+  }
+}
+
+.loading-tip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: rgba(41, 164, 164, 0.1);
+  border-radius: 4px;
+  .load-text {
+    color: #29a4a4;
+    font-size: 14px;
+  }
+}
+
+.tree-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: var(--font-color);
+  .el-loading-spinner {
+    margin-bottom: 10px;
+  }
+}
+
+.btn-up {
+  position: relative;
+  .loading-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+    .circular {
+      animation: loading-rotate 1.2s linear infinite;
+      width: 100%;
+      height: 100%;
+      .path {
+        stroke: #fff;
+        stroke-dasharray: 100;
+        stroke-dashoffset: 0;
+        animation: loading-dash 1.5s ease-in-out infinite;
+      }
+    }
+  }
+}
+
+@keyframes loading-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-dash {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -100;
   }
 }
 .expand-btn {
