@@ -950,7 +950,8 @@ function FullScreen(el) {
 //下载为图片
 function downloadImpByChart(chartName) {
   //得到svg的真实大小
-  let box = document.querySelector('svg').getBBox(),
+  const svg = document.querySelector('svg')
+  let box = svg.getBBox(),
     x = box.x,
     y = box.y,
     width = box.width * 2,
