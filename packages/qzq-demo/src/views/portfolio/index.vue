@@ -67,8 +67,8 @@ const handleOpen = (key, keyPath) => {
 nav {
   position: fixed;
   width: 200px;
-  top: 60px;
-  height: calc(100vh - 60px);
+  top: var(--headerHeight);
+  height: calc(100vh - var(--headerHeight));
   left: 0;
   z-index: 1000;
   overflow: auto;

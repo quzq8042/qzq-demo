@@ -69,9 +69,9 @@ export const constantRoutes = [
             meta: { title: '拖拽-课程表', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/fill',
-            component: () => import('@/views/portfolio/components/fill/index'),
-            name: 'Fill',
+            path: '/portfolio/file-files',
+            component: () => import('@/views/portfolio/components/files/index'),
+            name: 'Files',
             meta: { title: 'Excel文件-JSON', icon: 'dashboard' },
           },
           {
@@ -91,6 +91,12 @@ export const constantRoutes = [
             component: () => import('@/views/portfolio/components/websocket3/index'),
             name: 'WebSocket3',
             meta: { title: 'WebSocket3', icon: 'dashboard' },
+          },
+          {
+            path: '/portfolio/file-viewer',
+            component: () => import('@/views/portfolio/components/file-viewer/index'),
+            name: 'FileViewer',
+            meta: { title: '文件查看器', icon: 'dashboard' },
           },
         ],
       },
