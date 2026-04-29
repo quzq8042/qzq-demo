@@ -8,7 +8,7 @@ export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, './mode')
   const { VITE_APP_ENV, VITE_APP_BASE_API } = env
   return {
-    base: '/qzq-demo/',
+    base: VITE_APP_ENV === 'production' ? '/qzq-demo/' : '  /',
     envDir: './mode',
     plugins: createVitePlugins(env, command === 'build'),
     resolve: {
@@ -25,7 +25,7 @@ export default defineConfig(({ mode, command }) => {
       port: 3001,
       host: true,
       open: true,
-      historyApiFallback: true, // 解决刷新页面404问题
+      historyApiFallback: VITE_APP_ENV === 'production' ? true : false, // 解决刷新页面404问题
       proxy: {
         '/dev-api': {
           target: `http://localhost:8080/`,
