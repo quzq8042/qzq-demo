@@ -19,10 +19,13 @@
     <div class="file-box">
       <div class="file-list">
         <div class="file-list-title">文件查看器</div>
-        <div v-if="isLoading" class="tree-loading">
-          <el-loading-spinner></el-loading-spinner>
-          <span>正在加载文件...</span>
-        </div>
+        <div
+          v-if="isLoading"
+          v-loading="isLoading"
+          class="tree-loading"
+          element-loading-text="正在加载文件..."
+          element-loading-background="transparent"
+        ></div>
         <div v-else-if="files">
           <el-tree style="max-width: 600px" :data="files" :props="defaultProps" @node-click="handleNodeClick">
             <template #default="{ node }">
@@ -71,7 +74,7 @@ const getFileType = computed(() => (path) => {
 const files = ref(null)
 const isLoading = ref(false)
 const loadProgress = ref(0)
-const loadStatus = ref('active')
+const loadStatus = ref('')
 const loadingText = ref('')
 
 const createFileInput = async () => {
@@ -81,7 +84,7 @@ const createFileInput = async () => {
     // 开始加载状态
     isLoading.value = true
     loadProgress.value = 0
-    loadStatus.value = 'active'
+    loadStatus.value = ''
     loadingText.value = '正在解析文件夹...'
 
     // 清空之前的文件列表
