@@ -1,7 +1,7 @@
 :root {
-  --headerHeight: 60px;
+  --header-height: 60px;
   --header-width: 100vw;
-  --sidebar-width: 208px;
-  --side-height: calc(100vh - var(--headerHeight));
+  --sidebar-width: 220px;
+  --side-height: calc(100vh - var(--header-height));
   --min-page-width: 1200px;
 }

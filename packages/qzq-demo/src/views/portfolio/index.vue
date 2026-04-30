@@ -7,7 +7,7 @@
         </el-menu-item>
       </el-menu>
     </nav>
-    <div style="margin-left: 200px">
+    <div class="content-wrapper">
       <RouterView />
     </div>
   </div>
@@ -64,23 +64,82 @@ const handleOpen = (key, keyPath) => {
   position: relative;
 }
 
+.content-wrapper {
+  margin-left: var(--sidebar-width);
+  padding: 24px;
+  min-height: calc(100vh - var(--header-height));
+  box-sizing: border-box;
+}
+
 nav {
   position: fixed;
-  width: 200px;
-  top: var(--headerHeight);
-  height: calc(100vh - var(--headerHeight));
+  width: var(--sidebar-width);
+  top: var(--header-height);
+  height: calc(100vh - var(--header-height));
   left: 0;
   z-index: 1000;
   overflow: auto;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1), inset -2px 0 10px rgba(255, 255, 255, 0.05);
+  border-radius: 0 16px 16px 0;
 
   .el-menu-vertical-demo {
     width: 100%;
     height: 100%;
-    font-weight: bold;
+    background: transparent;
+    border: none;
+    padding: 16px 0;
 
-    .el-menu-item.is-active {
-      background-color: #87cefa;
+    .el-menu-item {
+      height: 48px;
+      line-height: 48px;
+      margin: 4px 12px;
+      border-radius: 12px;
+      color: #333333;
+      font-weight: 500;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      border: none;
+      background: transparent;
+
+      &:hover {
+        background: rgba(135, 206, 250, 0.15);
+        color: #333333;
+        font-weight: bold;
+        transform: translateX(8px);
+        box-shadow: 0 4px 15px rgba(135, 206, 250, 0.2);
+      }
+
+      &.is-active {
+        background: linear-gradient(135deg, rgba(135, 206, 250, 0.3) 0%, rgba(70, 130, 180, 0.4) 100%);
+        color: #4f3d3d;
+        font-weight: bold;
+        box-shadow: 0 4px 20px rgba(135, 206, 250, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(135, 206, 250, 0.3);
+      }
+
+      span {
+        margin-left: 8px;
+      }
     }
+  }
+}
+
+// 滚动条美化
+nav::-webkit-scrollbar {
+  width: 6px;
+}
+
+nav::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+nav::-webkit-scrollbar-thumb {
+  background: rgba(135, 206, 250, 0.4);
+  border-radius: 3px;
+
+  &:hover {
+    background: rgba(135, 206, 250, 0.6);
   }
 }
 </style>

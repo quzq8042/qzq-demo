@@ -41,9 +41,15 @@ export const constantRoutes = [
         path: '/portfolio',
         component: () => import('@/views/portfolio/index'),
         name: 'Portfolio',
-        redirect: '/portfolio/structure-chart',
+        redirect: '/portfolio/hive-box',
         meta: { title: '作品集', icon: 'dashboard', affix: true },
         children: [
+          {
+            path: '/portfolio/hive-box',
+            component: () => import('@/views/portfolio/components/hive-box/index'),
+            name: 'HiveBox',
+            meta: { title: '蜂巢', icon: 'dashboard' },
+          },
           {
             path: '/portfolio/structure-chart',
             component: () => import('@/views/portfolio/components/structure-chart/index'),

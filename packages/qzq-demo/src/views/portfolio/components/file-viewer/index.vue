@@ -313,7 +313,7 @@ onBeforeUpdate(() => {
   --active-color: #409eff;
   --tab-bg-color: rgba(49, 51, 53, 1);
   --menu-width: 237px;
-  height: calc(100vh - var(--headerHeight));
+  height: calc(100vh - var(--header-height));
   display: flex;
   .file-list {
     .file-list-title {
@@ -449,7 +449,7 @@ onBeforeUpdate(() => {
 }
 
 .file-editor {
-  height: calc(100vh - var(--headerHeight));
+  height: calc(100vh - var(--header-height));
   position: relative;
 }
 .file-editor-nav {
