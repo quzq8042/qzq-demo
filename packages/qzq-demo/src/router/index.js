@@ -51,6 +51,12 @@ export const constantRoutes = [
             meta: { title: '蜂巢', icon: 'dashboard' },
           },
           {
+            path: '/portfolio/rotation',
+            component: () => import('@/views/portfolio/components/rotation/index'),
+            name: 'Rotation',
+            meta: { title: '旋转视差', icon: 'dashboard' },
+          },
+          {
             path: '/portfolio/structure-chart',
             component: () => import('@/views/portfolio/components/structure-chart/index'),
             name: 'StructureChart',
