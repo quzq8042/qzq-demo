@@ -124,7 +124,7 @@ const resetSearch = () => {
       margin-bottom: 16px;
       color: #666;
     }
-    .highlight {
+    ::v-deep .highlight {
       background-color: #ffeb3b;
       color: #d32f2f;
       font-weight: bold;
