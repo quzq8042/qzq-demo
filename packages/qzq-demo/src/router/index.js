@@ -57,6 +57,12 @@ export const constantRoutes = [
             meta: { title: '旋转视差', icon: 'dashboard' },
           },
           {
+            path: '/portfolio/cad-shortcut-key',
+            component: () => import('@/views/portfolio/components/cad-shortcut-key/index'),
+            name: 'CadShortcutKey',
+            meta: { title: 'CAD快捷键', icon: 'dashboard' },
+          },
+          {
             path: '/portfolio/structure-chart',
             component: () => import('@/views/portfolio/components/structure-chart/index'),
             name: 'StructureChart',
