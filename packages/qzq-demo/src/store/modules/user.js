@@ -14,6 +14,7 @@ const useUserStore = defineStore('user', {
     createTime: '',
     nickName: '',
     phonenumber: '',
+    username: '', // 新增：存储登录用户名用于权限判断
   }),
   actions: {
     // 登录
@@ -23,6 +24,7 @@ const useUserStore = defineStore('user', {
           .then((res) => {
             setToken(res.token)
             this.token = res.token
+            this.username = userInfo.username // 存储登录用户名
             resolve()
           })
           .catch((error) => {
@@ -68,6 +70,7 @@ const useUserStore = defineStore('user', {
             this.token = ''
             this.roles = []
             this.permissions = []
+            this.username = '' // 清除用户名
             removeToken()
             resolve()
           })

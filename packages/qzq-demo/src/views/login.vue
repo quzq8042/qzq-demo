@@ -62,7 +62,11 @@ watch(
   },
   { immediate: true }
 )
-
+const logins = {
+  username: import.meta.env.VITE_APP_LOGINNAME_USER,
+  username1: import.meta.env.VITE_APP_LOGINNAME_ADMIN,
+  password: import.meta.env.VITE_APP_PASSWORD,
+}
 function handleLogin() {
   proxy.$refs.loginRef.validate((valid) => {
     if (valid) {
@@ -79,8 +83,17 @@ function handleLogin() {
         Cookies.remove('rememberMe')
       }
       loginForm.value.username = loginForm.value.username.trim()
+      // 始终保存用户名到 cookie（加密存储），用于页面刷新后恢复权限状态
+      Cookies.set('username', encrypt(loginForm.value.username))
       // 调用action的登录方法
-      if (loginForm.value.username !== 'admin' || loginForm.value.password !== 'admin123') {
+      const validUsers = [
+        { username: logins.username, password: logins.password },
+        { username: logins.username1, password: logins.password },
+      ]
+      const isValidUser = validUsers.some(
+        (user) => user.username === loginForm.value.username && user.password === loginForm.value.password
+      )
+      if (!isValidUser) {
         ElMessage.error('账号或密码错误')
         loading.value = false
         return
@@ -98,7 +111,9 @@ function handleLogin() {
             }
             return acc
           }, {})
-          router.push({ path: redirect.value || '/', query: otherQueryParams })
+          // 根据用户类型决定重定向路径
+          const defaultPath = loginForm.value.username === logins.username ? '/portfolio' : '/'
+          router.push({ path: redirect.value || defaultPath, query: otherQueryParams })
         })
         .catch(() => {
           loading.value = false
@@ -108,11 +123,11 @@ function handleLogin() {
 }
 
 function getCookie() {
-  const username = Cookies.get('username')
+  const encryptedUsername = Cookies.get('username')
   const password = Cookies.get('password')
   const rememberMe = Cookies.get('rememberMe')
   loginForm.value = {
-    username: username === undefined ? loginForm.value.username : username,
+    username: encryptedUsername === undefined ? loginForm.value.username : decrypt(encryptedUsername),
     password: password === undefined ? loginForm.value.password : decrypt(password),
     rememberMe: rememberMe === undefined ? false : Boolean(rememberMe),
   }

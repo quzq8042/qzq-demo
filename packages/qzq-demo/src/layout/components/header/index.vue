@@ -14,21 +14,36 @@
 
 <script setup>
 import TimePicker from '../time-picker/index.vue'
+import useUserStore from '@/store/modules/user'
+import Cookies from 'js-cookie'
+import { decrypt } from '@/utils/jsencrypt'
 const router = useRouter()
 
-// 从路由配置中提取导航项
+// 从路由配置中提取导航项（根据用户权限过滤）
 const navRoutes = computed(() => {
+  // 直接从 cookie 读取用户名（解密后），确保页面刷新后仍能正确过滤
+  const encryptedUsername = Cookies.get('username')
+  const username = encryptedUsername ? decrypt(encryptedUsername) : null
   return router.options.routes
     .flatMap((route) => {
       // 处理嵌套路由
       if (route.children && route.children.length > 0) {
-        return route.children.filter((child) => !child.hidden)
+        return route.children.filter((child) => {
+          // admin 用户不能看到 /index 路由
+          if (username === 'admin' && child.path === '/index') {
+            return false
+          }
+          return !child.hidden
+        })
+      }
+      // admin 用户不能看到 /index 路由
+      if (username === 'admin' && route.path === '/index') {
+        return []
       }
       return route.hidden ? [] : [route]
     })
     .filter((route) => route.meta && route.meta.title)
 })
-import useUserStore from '@/store/modules/user'
 import { ElMessage, ElMessageBox } from 'element-plus'
 const handleLogout = () => {
   ElMessageBox.confirm('是否确认退出登录?', '提示', {

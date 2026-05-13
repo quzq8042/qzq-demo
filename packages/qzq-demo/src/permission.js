@@ -9,6 +9,8 @@ import useUserStore from '@/store/modules/user'
 import useSettingsStore from '@/store/modules/settings'
 import usePermissionStore from '@/store/modules/permission'
 import { useLimitModule } from './hooks/useLimitModule.js'
+import Cookies from 'js-cookie'
+import { decrypt } from '@/utils/jsencrypt'
 
 const { limitModule, islimitModuleIndustrial } = useLimitModule()
 
@@ -25,42 +27,17 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      // if (useUserStore().roles.length === 0) {
-      // isRelogin.show = true
-      // 判断当前用户是否已拉取完user_info信息
-      // useUserStore()
-      // .getInfo()
-      // .then(() => {
-      // isRelogin.show = false
-      // usePermissionStore()
-      //   .generateRoutes()
-      //   .then((accessRoutes) => {
-      //     // 根据roles权限生成可访问的路由表
-      //     accessRoutes.forEach((route) => {
-      //       if (!isHttp(route.path)) {
-      //         router.addRoute(route) // 动态添加可访问路由表
-      //       }
-      //     })
-      //     if (islimitModuleIndustrial()) {
-      //       if (to.path.indexOf('/detail/') === 0) {
-      //         next({ ...to, replace: true })
-      //       } else {
-      //         next({ path: '/industrial', replace: true }) // hack方法 确保addRoutes已完成
-      //       }
-      //     } else {
-      //       next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
-      //     }
-      //   })
-      // })
-      // .catch((err) => {
-      //   useUserStore()
-      //     .logOut()
-      //     .then(() => {
-      //       ElMessage.error(err)
-      //       next({ path: '/' })
-      //     })
-      // })
-      // } else
+      // 权限控制：admin 用户不能访问 /index 和 / 路由，
+      // 直接从 cookie 读取用户名（解密后），确保页面刷新后仍能正确拦截
+      const encryptedUsername = Cookies.get('username')
+      const username = encryptedUsername ? decrypt(encryptedUsername) : null
+      if (username === 'admin' && (to.path === '/index' || to.path === '/')) {
+        ElMessage.warning('当前账号无权限访问此页面')
+        next({ path: '/portfolio', replace: true }) // 重定向到作品集页面，replace防止回退
+        NProgress.done()
+        return
+      }
+
       if (limitModule(to.path)) {
         next({ path: '/' })
       } else {
