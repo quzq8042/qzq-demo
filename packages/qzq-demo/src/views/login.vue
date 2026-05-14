@@ -40,10 +40,14 @@ const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
 const { proxy } = getCurrentInstance()
-
+const logins = {
+  username: import.meta.env.VITE_APP_LOGINNAME_USER,
+  username1: import.meta.env.VITE_APP_LOGINNAME_ADMIN,
+  password: import.meta.env.VITE_APP_PASSWORD,
+}
 const loginForm = ref({
-  username: '',
-  password: '',
+  username: logins.username,
+  password: logins.password,
   rememberMe: false,
 })
 
@@ -62,11 +66,7 @@ watch(
   },
   { immediate: true }
 )
-const logins = {
-  username: import.meta.env.VITE_APP_LOGINNAME_USER,
-  username1: import.meta.env.VITE_APP_LOGINNAME_ADMIN,
-  password: import.meta.env.VITE_APP_PASSWORD,
-}
+
 function handleLogin() {
   proxy.$refs.loginRef.validate((valid) => {
     if (valid) {

@@ -45,22 +45,16 @@ export const constantRoutes = [
         meta: { title: '项目展示', icon: 'dashboard', affix: true },
         children: [
           {
-            path: '/portfolio/hive-box',
-            component: () => import('@/views/portfolio/components/hive-box/index'),
-            name: 'HiveBox',
-            meta: { title: '蜂巢', icon: 'dashboard' },
-          },
-          {
-            path: '/portfolio/rotation',
-            component: () => import('@/views/portfolio/components/rotation/index'),
-            name: 'Rotation',
-            meta: { title: '旋转视差', icon: 'dashboard' },
-          },
-          {
             path: '/portfolio/cad-shortcut-key',
             component: () => import('@/views/portfolio/components/cad-shortcut-key/index'),
             name: 'CadShortcutKey',
             meta: { title: 'CAD快捷键', icon: 'dashboard' },
+          },
+          {
+            path: '/portfolio/style-effect',
+            component: () => import('@/views/portfolio/components/style-effect/index'),
+            name: 'StyleEffect',
+            meta: { title: '样式特效', icon: 'dashboard' },
           },
           {
             path: '/portfolio/structure-chart',
