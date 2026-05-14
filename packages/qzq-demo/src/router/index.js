@@ -28,7 +28,7 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/',
-    redirect: '/index',
+    redirect: '/portfolio',
     component: Layout,
     children: [
       {

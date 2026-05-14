@@ -54,7 +54,7 @@ setInterval(updateClock, 1000)
   display: flex;
   align-items: center;
   padding: 0 10px;
-  height: var(--header-height);
+  height: calc(var(--header-height) - 25px);
   color: #ffffff;
 }
 .time,
