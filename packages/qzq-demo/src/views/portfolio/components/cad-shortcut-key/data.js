@@ -87,6 +87,8 @@ const shortcutData = [
   { command: 'Ctrl + 1', function: '特性', description: '特性' },
   { command: 'OP', function: '选项', description: '选项' },
   { command: 'DS', function: '草图设置', description: '草图设置' },
+  { command: 'MV', function: '插入视图', description: '将包含命名视图的视口放到当前布局上。视口将自动指定标准比例和锁定。' },
+  { command: 'V', function: '视图管理器', description: '视图管理器' },
 ]
 
 const columns = [
