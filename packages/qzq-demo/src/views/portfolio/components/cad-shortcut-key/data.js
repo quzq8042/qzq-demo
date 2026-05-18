@@ -66,6 +66,7 @@ const modifyData = [
   { command: 'BREAKATPOINT', function: '打断于点', description: '在一点打断选定的对象' },
   { command: 'DR', function: '绘图顺序', description: '修改绘制顺序' },
   { command: 'RE', function: '重生成', description: '重新生成当前视图' },
+  { command: 'BO', function: '边界', description: '在封闭框里面点一下，自动生成闭合外轮廓' },
 ]
 
 // 常用快捷键数据
