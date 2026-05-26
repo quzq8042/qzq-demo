@@ -1,9 +1,11 @@
 <template>
   <div class="cad-shortcut-key">
     <div class="search-container">
-      <h1>CAD快捷命令</h1>
+      <h1>CAD | UG 快捷命令</h1>
       <el-input v-model="searchText" placeholder="搜索命令" clearable style="width: 300px" />
       <el-button type="primary" @click="resetSearch">重置</el-button>
+      <el-button type="success" icon="Download" @click="exportMarkdown">导出 Markdown</el-button>
+      <el-button type="warning" icon="Download" @click="exportExcel">导出 Excel</el-button>
     </div>
 
     <!-- 全局搜索结果 -->
@@ -36,6 +38,8 @@
 
 <script setup>
 import { tabs } from './data'
+import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
 
 const activeTab = ref('draw')
 const searchText = ref('')
@@ -98,6 +102,44 @@ const globalSearchResults = computed(() => {
 const resetSearch = () => {
   searchText.value = ''
   debouncedKeyword.value = ''
+}
+
+// 导出 Markdown
+const exportMarkdown = () => {
+  let mdContent = '# CAD | UG 快捷命令手册\n\n'
+
+  tabs.forEach((tab) => {
+    mdContent += `## ${tab.label}\n\n`
+    mdContent += '| 快捷命令 | 功能 | 详细描述 |\n'
+    mdContent += '| :--- | :--- | :--- |\n'
+
+    tab.data.forEach((item) => {
+      mdContent += `| ${item.command} | ${item.function} | ${item.description} |\n`
+    })
+    mdContent += '\n'
+  })
+
+  const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' })
+  saveAs(blob, 'CAD | UG 快捷命令手册.md')
+}
+
+// 导出 Excel
+const exportExcel = () => {
+  const wb = XLSX.utils.book_new()
+
+  tabs.forEach((tab) => {
+    const data = tab.data.map((item) => ({
+      快捷命令: item.command,
+      功能: item.function,
+      详细描述: item.description,
+    }))
+    const ws = XLSX.utils.json_to_sheet(data)
+    XLSX.utils.book_append_sheet(wb, ws, tab.label)
+  })
+
+  const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
+  const blob = new Blob([wbout], { type: 'application/octet-stream' })
+  saveAs(blob, 'CAD | UG快捷命令手册.xlsx')
 }
 </script>
 

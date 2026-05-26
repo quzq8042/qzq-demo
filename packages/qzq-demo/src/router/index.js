@@ -48,7 +48,7 @@ export const constantRoutes = [
             path: '/portfolio/cad-shortcut-key',
             component: () => import('@/views/portfolio/components/cad-shortcut-key/index'),
             name: 'CadShortcutKey',
-            meta: { title: 'CAD快捷键', icon: 'dashboard' },
+            meta: { title: 'CAD | UG 快捷键', icon: 'dashboard' },
           },
           {
             path: '/portfolio/style-effect',
