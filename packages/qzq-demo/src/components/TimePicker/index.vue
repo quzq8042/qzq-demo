@@ -1,5 +1,5 @@
 <template>
-  <div class="clock-container">
+  <div class="clock-container" :class="{ shadows: shadows }">
     <div class="date">{{ date }}</div>
     <div class="time">{{ time }}</div>
     <div class="greeting">{{ greeting }}</div>
@@ -7,6 +7,12 @@
 </template>
 
 <script setup>
+const props = defineProps({
+  shadows: {
+    type: Boolean,
+    default: true,
+  },
+})
 const time = ref(null)
 const date = ref(null)
 const greeting = ref(null)
@@ -50,12 +56,14 @@ setInterval(updateClock, 1000)
 /* 这里是组件的样式 */
 .clock-container {
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   padding: 0 10px;
   height: calc(var(--header-height) - 25px);
   color: #ffffff;
+}
+.shadows {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 .time,
 .date {

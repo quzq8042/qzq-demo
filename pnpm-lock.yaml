@@ -20,6 +20,9 @@ importers:
       '@vueuse/core':
         specifier: 12.0.0
         version: 12.0.0
+      lunar-calendar:
+        specifier: ^0.1.4
+        version: 0.1.4
       pinia:
         specifier: 2.3.0
         version: 2.3.0(vue@3.5.13)
@@ -2737,6 +2740,9 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
+
+  lunar-calendar@0.1.4:
+    resolution: {integrity: sha512-5r87vbg5yg56z/jkf3A+Ur+ZggUTiJw1VATT9P7RELQgWcTNhfJ+OLkNYroSna6r65bMqyaAgapo9vRN40L75A==}
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -6787,6 +6793,8 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  lunar-calendar@0.1.4: {}
 
   magic-string@0.30.21:
     dependencies:

@@ -1,10 +1,15 @@
 <template>
   <header class="app-header">
-    <nav class="header-nav">
-      <router-link v-for="route in navRoutes" :key="route.path" :to="route.path" class="nav-item" active-class="active">
-        {{ route.meta.title }}
-      </router-link>
-    </nav>
+    <div class="header-left">
+      <div class="logo" @click="handleLogoClick">
+        <img src="./logo.webp" alt="logo" />
+      </div>
+      <nav class="header-nav">
+        <router-link v-for="route in navRoutes" :key="route.path" :to="route.path" class="nav-item" active-class="active">
+          {{ route.meta.title }}
+        </router-link>
+      </nav>
+    </div>
     <div class="header-right">
       <time-picker class="time-picker"></time-picker>
       <el-button type="primary" @click="handleLogout">退出登录</el-button>
@@ -13,7 +18,7 @@
 </template>
 
 <script setup>
-import TimePicker from '../time-picker/index.vue'
+import TimePicker from '@/components/TimePicker/index.vue'
 import useUserStore from '@/store/modules/user'
 import Cookies from 'js-cookie'
 import { decrypt } from '@/utils/jsencrypt'
@@ -65,6 +70,9 @@ const handleLogout = () => {
       })
     })
 }
+const handleLogoClick = () => {
+  router.push({ path: '/' })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -81,7 +89,21 @@ const handleLogout = () => {
   top: 0;
   z-index: 100;
 }
-
+.header-left {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 16px;
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
 .header-nav {
   height: 100%;
   line-height: var(--header-height);

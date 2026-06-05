@@ -1,7 +1,8 @@
 <template>
   <div class="page-login">
+    <div v-for="i in 5" :key="i" :class="`layer${i}`"></div>
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
-      <h2 class="login-title">用户登录</h2>
+      <h2 class="login-title"><img class="logo" src="../assets/images/logo.webp" alt="logo" />工设绘记</h2>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" size="large" auto-complete="off" placeholder="账号">
           <template #prefix><svg-icon icon-class="loginuser" class="el-input__icon input-icon" /></template>
@@ -26,6 +27,7 @@
         </el-button>
       </el-form-item>
     </el-form>
+    <Calendar />
   </div>
 </template>
 
@@ -35,6 +37,7 @@ import { encrypt, decrypt, rsaEncrypt } from '@/utils/jsencrypt'
 import useUserStore from '@/store/modules/user'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
+import Calendar from '@/components/Calendar/index.vue'
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -142,8 +145,7 @@ onMounted(() => {
 .page-login {
   width: 100%;
   height: 100vh;
-  position: relative;
-  background-image: url('../assets/images/login.webp');
+  background-image: url('../assets/images/bg.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -152,10 +154,10 @@ onMounted(() => {
 }
 
 .login-form {
-  position: absolute;
-  left: 50%;
+  position: fixed;
+  right: 10vw;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -166,12 +168,22 @@ onMounted(() => {
   border-radius: 10px;
   z-index: 1;
   .login-title {
-    font-size: 24px;
+    font-size: 32px;
     font-weight: bold;
-    color: #333333;
-    line-height: 24px;
+    color: #ffffff;
+    line-height: 32px;
     text-align: center;
     margin-bottom: 30px;
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px rgba(135, 206, 250, 0.8), 0 0 20px rgba(135, 206, 250, 0.6), 0 0 30px rgba(135, 206, 250, 0.4),
+      0 2px 4px rgba(0, 0, 0, 0.3);
+    .logo {
+      width: 32px;
+      height: 32px;
+      margin-right: 8px;
+      vertical-align: middle;
+      background-color: transparent;
+    }
   }
   &:deep(.el-input) {
     height: 48px;
@@ -203,7 +215,50 @@ onMounted(() => {
   font-weight: bold;
   font-size: 16px;
   color: #ffffff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   line-height: 16px;
   border: none !important;
+}
+</style>
+<style scoped lang="scss">
+@function star($n) {
+  $result: '#{random(100)}vw #{random(100)}vh 0 #fff';
+  @for $i from 2 through $n {
+    $result: '#{$result}, #{random(100)}vw #{random(100)}vh 0 #fff';
+  }
+  @return unquote($result);
+}
+$n: 5;
+$duration: 400s;
+$count: 1000;
+@for $i from 1 through $n {
+  $duration: floor($duration / 2);
+  $count: floor($count / 2);
+  .layer#{$i} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: #{$i}px;
+    height: #{$i}px;
+    border-radius: 50%;
+    box-shadow: star($count);
+    animation: moveup #{$duration} linear infinite;
+    &::after {
+      content: '';
+      position: inherit;
+      width: inherit;
+      height: inherit;
+      border-radius: inherit;
+      box-shadow: inherit;
+      left: 0;
+      top: 100vh;
+    }
+  }
+}
+
+@keyframes moveup {
+  to {
+    transform: translateY(-100vh);
+  }
 }
 </style>
