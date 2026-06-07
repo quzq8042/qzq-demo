@@ -166,7 +166,7 @@ const exportExcel = () => {
       margin-bottom: 16px;
       color: #666;
     }
-    ::v-deep .highlight {
+    :deep(.highlight) {
       background-color: #ffeb3b;
       color: #d32f2f;
       font-weight: bold;
