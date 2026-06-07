@@ -8,6 +8,9 @@ import locale from 'element-plus/es/locale/lang/zh-cn'
 
 import '@/assets/styles/index.scss' // global css
 
+import BaiduMap from 'vue-baidu-map-3x'
+import axios from 'axios'
+
 import App from './App'
 import store from './store'
 import router from './router'
@@ -45,6 +48,13 @@ app.use(plugins)
 app.use(elementIcons)
 app.component('SvgIcon', SvgIcon)
 
+app.use(BaiduMap, {
+  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+  ak: '52UijIgvDR7OZzS5H3I7S8jBSYNelrgQ',
+  // v:'2.0',  // 默认使用3.0
+  // type: 'WebGL' // ||API 默认API  (使用此模式 BMap=BMapGL)
+})
+app.config.globalProperties.$axios = axios
 directive(app)
 
 // 使用element-plus 并且设置全局的大小

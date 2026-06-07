@@ -80,7 +80,6 @@ nav {
   z-index: 1000;
   overflow: auto;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1), inset -2px 0 10px rgba(255, 255, 255, 0.05);
-  border-radius: 0 16px 16px 0;
 
   .el-menu-vertical-demo {
     width: 100%;
