@@ -51,6 +51,12 @@ export const constantRoutes = [
             meta: { title: 'CAD | UG 快捷键', icon: 'dashboard' },
           },
           {
+            path: '/portfolio/CNC',
+            component: () => import('@/views/portfolio/components/CNC/index'),
+            name: 'CNC',
+            meta: { title: 'CNC', icon: 'dashboard' },
+          },
+          {
             path: '/portfolio/style-effect',
             component: () => import('@/views/portfolio/components/style-effect/index'),
             name: 'StyleEffect',

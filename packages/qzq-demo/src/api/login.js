@@ -1,5 +1,7 @@
 import request from '@/utils/request'
 import { mockRequest } from '@/mock/mock.js'
+import { encrypt, decrypt, rsaEncrypt } from '@/utils/jsencrypt'
+
 // 登录方法
 export function login(userInfo) {
   const data = {
@@ -15,8 +17,9 @@ export function login(userInfo) {
   //   method: 'post',
   //   data: data,
   // })
+  const token = encrypt(data.username)
   return mockRequest({
-    token: '123456',
+    token: token,
   })
 }
 

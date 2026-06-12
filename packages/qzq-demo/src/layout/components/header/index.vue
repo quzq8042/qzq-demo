@@ -20,14 +20,14 @@
 <script setup>
 import TimePicker from '@/components/TimePicker/index.vue'
 import useUserStore from '@/store/modules/user'
-import Cookies from 'js-cookie'
+import { getToken } from '@/utils/auth'
 import { decrypt } from '@/utils/jsencrypt'
 const router = useRouter()
 
 // 从路由配置中提取导航项（根据用户权限过滤）
 const navRoutes = computed(() => {
   // 直接从 cookie 读取用户名（解密后），确保页面刷新后仍能正确过滤
-  const encryptedUsername = Cookies.get('username')
+  const encryptedUsername = getToken()
   const username = encryptedUsername ? decrypt(encryptedUsername) : null
   return router.options.routes
     .flatMap((route) => {

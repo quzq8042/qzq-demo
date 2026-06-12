@@ -3,16 +3,7 @@ import { ElMessage } from 'element-plus'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
-import { isHttp } from '@/utils/validate'
-import { isRelogin } from '@/utils/request'
-import useUserStore from '@/store/modules/user'
-import useSettingsStore from '@/store/modules/settings'
-import usePermissionStore from '@/store/modules/permission'
-import { useLimitModule } from './hooks/useLimitModule.js'
-import Cookies from 'js-cookie'
 import { decrypt } from '@/utils/jsencrypt'
-
-const { limitModule, islimitModuleIndustrial } = useLimitModule()
 
 NProgress.configure({ showSpinner: false })
 
@@ -21,15 +12,13 @@ router.beforeEach((to, from, next) => {
   NProgress.start()
   // next()
   if (getToken()) {
-    to.meta.title && useSettingsStore().setTitle(to.meta.title)
-    /* has token*/
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done()
     } else {
       // 权限控制：admin 用户不能访问 /index 和 / 路由，
       // 直接从 cookie 读取用户名（解密后），确保页面刷新后仍能正确拦截
-      const encryptedUsername = Cookies.get('username')
+      const encryptedUsername = getToken()
       const username = encryptedUsername ? decrypt(encryptedUsername) : null
       if (username === 'admin' && to.path === '/index') {
         ElMessage.warning('当前账号无权限访问此页面')
@@ -38,11 +27,7 @@ router.beforeEach((to, from, next) => {
         return
       }
 
-      if (limitModule(to.path)) {
-        next({ path: '/' })
-      } else {
-        next()
-      }
+      next()
     }
   } else {
     // 没有token

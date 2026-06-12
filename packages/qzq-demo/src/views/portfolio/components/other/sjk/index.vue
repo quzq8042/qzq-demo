@@ -2,7 +2,6 @@
   <div>
     <div class="box">
       <p>第{{ currentIndex + 1 }}个 \ 共{{ imgList.length }}个</p>
-      <p>答案:{{ res(imgList[currentIndex]) }}</p>
       <img :src="imgList[currentIndex]" alt="" />
     </div>
     <div>
@@ -87,15 +86,6 @@ const imgList = [
   img35,
 ]
 const currentIndex = ref(0)
-const res = (v) => {
-  let a = v.lastIndexOf('/')
-  let b = v.substring(a + 1)
-  let c = b.lastIndexOf('.')
-  let d = b.substring(0, c)
-  let e = d.indexOf('-')
-  let f = d.substring(e + 1)
-  return f
-}
 function prev() {
   if (currentIndex.value > 0) {
     currentIndex.value--

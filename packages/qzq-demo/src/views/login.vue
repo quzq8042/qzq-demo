@@ -51,7 +51,6 @@ const logins = {
 const loginForm = ref({
   username: logins.username,
   password: logins.password,
-  rememberMe: false,
 })
 
 const loginRules = {
@@ -74,20 +73,8 @@ function handleLogin() {
   proxy.$refs.loginRef.validate((valid) => {
     if (valid) {
       loading.value = true
-      // 勾选了需要记住密码设置在 cookie 中设置记住用户名和密码
-      if (loginForm.value.rememberMe) {
-        Cookies.set('username', loginForm.value.username, { expires: 30 })
-        Cookies.set('password', encrypt(loginForm.value.password), { expires: 30 })
-        Cookies.set('rememberMe', loginForm.value.rememberMe, { expires: 30 })
-      } else {
-        // 否则移除
-        Cookies.remove('username')
-        Cookies.remove('password')
-        Cookies.remove('rememberMe')
-      }
+
       loginForm.value.username = loginForm.value.username.trim()
-      // 始终保存用户名到 cookie（加密存储），用于页面刷新后恢复权限状态
-      Cookies.set('username', encrypt(loginForm.value.username))
       // 调用action的登录方法
       const validUsers = [
         { username: logins.username, password: logins.password },
@@ -114,9 +101,7 @@ function handleLogin() {
             }
             return acc
           }, {})
-          // 根据用户类型决定重定向路径
-          const defaultPath = loginForm.value.username === logins.username ? '/portfolio' : '/'
-          router.push({ path: redirect.value || defaultPath, query: otherQueryParams })
+          router.push({ path: redirect.value || '/', query: otherQueryParams })
         })
         .catch(() => {
           loading.value = false
@@ -124,21 +109,6 @@ function handleLogin() {
     }
   })
 }
-
-function getCookie() {
-  const encryptedUsername = Cookies.get('username')
-  const password = Cookies.get('password')
-  const rememberMe = Cookies.get('rememberMe')
-  loginForm.value = {
-    username: encryptedUsername === undefined ? loginForm.value.username : decrypt(encryptedUsername),
-    password: password === undefined ? loginForm.value.password : decrypt(password),
-    rememberMe: rememberMe === undefined ? false : Boolean(rememberMe),
-  }
-}
-
-onMounted(() => {
-  getCookie()
-})
 </script>
 
 <style lang="scss" scoped>
