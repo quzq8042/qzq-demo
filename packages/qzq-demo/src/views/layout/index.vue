@@ -1,13 +1,13 @@
 <template>
   <div class="app-wrapper">
-    <nav>
+    <nav v-if="navRoutes.length > 0">
       <el-menu :default-active="defaultActive" class="el-menu-vertical-demo" @select="handleOpen">
         <el-menu-item v-for="route in navRoutes" :key="route.path" :index="route.path">
           <span>{{ route.meta.title }}</span>
         </el-menu-item>
       </el-menu>
     </nav>
-    <div class="content-wrapper">
+    <div :class="['content-wrapper', { 'has-sidebar': navRoutes.length > 0 }]">
       <RouterView />
     </div>
   </div>
@@ -15,47 +15,48 @@
 
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
+import { watch, ref, computed } from 'vue'
 
-import { watch, ref, onMounted } from 'vue'
 const defaultActive = ref('')
 const navRoutes = ref([])
 const router = useRouter()
 const route = useRoute()
 
-// 在组件挂载时初始化导航项，只计算一次
-onMounted(() => {
-  const findPortfolioRoute = (routes) => {
-    for (const r of routes) {
-      if (r.path === '/portfolio') {
-        return r
-      }
-      if (r.children && r.children.length > 0) {
-        const found = findPortfolioRoute(r.children)
-        if (found) return found
-      }
-    }
-    return null
-  }
+const sidebarRoutes = ['/cnc', '/front-end']
 
-  const portfolioRoute = findPortfolioRoute(router.options.routes)
-  if (portfolioRoute && portfolioRoute.children && portfolioRoute.children.length > 0) {
-    navRoutes.value = portfolioRoute.children.filter((child) => !child.hidden).filter((child) => child.meta && child.meta.title)
+const findParentRoute = (routes, currentPath) => {
+  for (const r of routes) {
+    if (sidebarRoutes.includes(r.path) && currentPath.startsWith(r.path)) {
+      return r
+    }
+    if (r.children && r.children.length > 0) {
+      const found = findParentRoute(r.children, currentPath)
+      if (found) return found
+    }
   }
-})
+  return null
+}
+
+const updateNavRoutes = (currentPath) => {
+  const parentRoute = findParentRoute(router.options.routes, currentPath)
+  if (parentRoute && parentRoute.children && parentRoute.children.length > 0) {
+    navRoutes.value = parentRoute.children.filter((child) => !child.hidden).filter((child) => child.meta && child.meta.title)
+  } else {
+    navRoutes.value = []
+  }
+}
+
 watch(
-  () => route,
-  (newVal, oldVal) => {
-    defaultActive.value = newVal.path
+  () => route.path,
+  (newPath) => {
+    defaultActive.value = newPath
+    updateNavRoutes(newPath)
   },
-  {
-    immediate: true,
-  }
+  { immediate: true }
 )
 
-const handleOpen = (key, keyPath) => {
-  router.push({
-    path: key,
-  })
+const handleOpen = (key) => {
+  router.push({ path: key })
 }
 </script>
 
@@ -65,10 +66,14 @@ const handleOpen = (key, keyPath) => {
 }
 
 .content-wrapper {
-  margin-left: var(--sidebar-width);
   padding: 24px;
   min-height: calc(100vh - var(--header-height));
   box-sizing: border-box;
+  transition: margin-left 0.3s ease;
+
+  &.has-sidebar {
+    margin-left: var(--sidebar-width);
+  }
 }
 
 nav {

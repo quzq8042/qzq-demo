@@ -22,7 +22,7 @@ router.beforeEach((to, from, next) => {
       const username = encryptedUsername ? decrypt(encryptedUsername) : null
       if (username === 'admin' && to.path === '/index') {
         ElMessage.warning('当前账号无权限访问此页面')
-        next({ path: '/portfolio', replace: true }) // 重定向到作品集页面，replace防止回退
+        next({ path: '/cnc', replace: true }) // 重定向到作品集页面，replace防止回退
         NProgress.done()
         return
       }
@@ -35,7 +35,7 @@ router.beforeEach((to, from, next) => {
       // 在免登录白名单，直接进入
       next()
     } else {
-      next(`/login?redirect=${to.fullPath}`) // 否则全部重定向到登录页
+      next(`/login`) // 否则全部重定向到登录页
       NProgress.done()
     }
   }

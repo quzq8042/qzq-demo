@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter, createWebHashHistory } from 'vue-router'
 
 import Layout from '@/layout'
+import ViewLayout from '@/views/layout/index.vue'
 
 /**
  * Note: 路由配置项
@@ -28,7 +29,7 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/',
-    redirect: '/portfolio',
+    redirect: '/cnc',
     component: Layout,
     children: [
       {
@@ -38,99 +39,108 @@ export const constantRoutes = [
         meta: { title: '个人简历', icon: 'dashboard', affix: true },
       },
       {
-        path: '/portfolio',
-        component: () => import('@/views/portfolio/index'),
-        name: 'Portfolio',
-        redirect: '/portfolio/cad-shortcut-key',
-        meta: { title: '项目展示', icon: 'dashboard', affix: true },
+        path: '/cnc',
+        component: ViewLayout,
+        name: 'cnc',
+        redirect: '/cnc/cad-shortcut-key',
+        meta: { title: '首页', icon: 'dashboard', affix: true },
         children: [
           {
-            path: '/portfolio/cad-shortcut-key',
-            component: () => import('@/views/portfolio/components/cad-shortcut-key/index'),
+            path: '/cnc/cad-shortcut-key',
+            component: () => import('@/views/cnc/cad-shortcut-key/index'),
             name: 'CadShortcutKey',
             meta: { title: 'CAD | UG 快捷键', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/CNC',
-            component: () => import('@/views/portfolio/components/CNC/index'),
-            name: 'CNC',
-            meta: { title: 'CNC', icon: 'dashboard' },
+            path: '/cnc/cnc-code',
+            component: () => import('@/views/cnc/cnc-code/index'),
+            name: 'CncCode',
+            meta: { title: 'CNC 代码', icon: 'dashboard' },
           },
+        ],
+      },
+      {
+        path: '/front-end',
+        component: ViewLayout,
+        name: 'front-end',
+        redirect: '/front-end/style-effect',
+        meta: { title: '前端', icon: 'dashboard', affix: true },
+        children: [
           {
-            path: '/portfolio/style-effect',
-            component: () => import('@/views/portfolio/components/style-effect/index'),
+            path: '/front-end/style-effect',
+            component: () => import('@/views/front-end/style-effect/index'),
             name: 'StyleEffect',
             meta: { title: '样式特效', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/structure-chart',
-            component: () => import('@/views/portfolio/components/structure-chart/index'),
+            path: '/front-end/structure-chart',
+            component: () => import('@/views/front-end/structure-chart/index'),
             name: 'StructureChart',
             meta: { title: '股权穿透图', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/steps',
-            component: () => import('@/views/portfolio/components/steps/index'),
+            path: '/front-end/steps',
+            component: () => import('@/views/front-end/steps/index'),
             name: 'Steps',
             meta: { title: '步骤条', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/drag',
-            component: () => import('@/views/portfolio/components/drag/index'),
+            path: '/front-end/drag',
+            component: () => import('@/views/front-end/drag/index'),
             name: 'Drag',
             meta: { title: '简单拖拽', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/drag-kcb',
-            component: () => import('@/views/portfolio/components/drag-kcb/index'),
+            path: '/front-end/drag-kcb',
+            component: () => import('@/views/front-end/drag-kcb/index'),
             name: 'DragKcb',
             meta: { title: '拖拽-课程表', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/file-files',
-            component: () => import('@/views/portfolio/components/files/index'),
+            path: '/front-end/file-files',
+            component: () => import('@/views/front-end/files/index'),
             name: 'Files',
             meta: { title: 'Excel文件-JSON', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/websocket1',
-            component: () => import('@/views/portfolio/components/websocket1/index'),
+            path: '/front-end/websocket1',
+            component: () => import('@/views/front-end/websocket1/index'),
             name: 'WebSocket1',
             meta: { title: 'WebSocket1', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/websocket2',
-            component: () => import('@/views/portfolio/components/websocket2/index'),
+            path: '/front-end/websocket2',
+            component: () => import('@/views/front-end/websocket2/index'),
             name: 'WebSocket2',
             meta: { title: 'WebSocket2', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/websocket3',
-            component: () => import('@/views/portfolio/components/websocket3/index'),
+            path: '/front-end/websocket3',
+            component: () => import('@/views/front-end/websocket3/index'),
             name: 'WebSocket3',
             meta: { title: 'WebSocket3', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/file-viewer',
-            component: () => import('@/views/portfolio/components/file-viewer/index'),
+            path: '/front-end/file-viewer',
+            component: () => import('@/views/front-end/file-viewer/index'),
             name: 'FileViewer',
             meta: { title: '文件查看器', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/echarts',
-            component: () => import('@/views/portfolio/components/echarts/index'),
+            path: '/front-end/echarts',
+            component: () => import('@/views/front-end/echarts/index'),
             name: 'Echarts',
             meta: { title: 'Echarts案例', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/map',
-            component: () => import('@/views/portfolio/components/map/index'),
+            path: '/front-end/map',
+            component: () => import('@/views/front-end/map/index'),
             name: 'Map',
             meta: { title: '地图', icon: 'dashboard' },
           },
           {
-            path: '/portfolio/other',
-            component: () => import('@/views/portfolio/components/other/index'),
+            path: '/front-end/other',
+            component: () => import('@/views/front-end/other/index'),
             name: 'Other',
             meta: { title: '其他', icon: 'dashboard' },
           },

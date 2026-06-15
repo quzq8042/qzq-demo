@@ -59,15 +59,6 @@ const loginRules = {
 }
 
 const loading = ref(false)
-const redirect = ref(undefined)
-
-watch(
-  route,
-  (newRoute) => {
-    redirect.value = newRoute.query && newRoute.query.redirect
-  },
-  { immediate: true }
-)
 
 function handleLogin() {
   proxy.$refs.loginRef.validate((valid) => {
@@ -94,14 +85,7 @@ function handleLogin() {
           password: rsaEncrypt(loginForm.value.password),
         })
         .then(() => {
-          const query = route.query
-          const otherQueryParams = Object.keys(query).reduce((acc, cur) => {
-            if (cur !== 'redirect') {
-              acc[cur] = query[cur]
-            }
-            return acc
-          }, {})
-          router.push({ path: redirect.value || '/', query: otherQueryParams })
+          router.push({ path: '/' })
         })
         .catch(() => {
           loading.value = false

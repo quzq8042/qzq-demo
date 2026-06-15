@@ -9,14 +9,26 @@
     </div>
 
     <!-- 全局搜索结果 -->
-    <div v-if="debouncedKeyword && (tableSearchResults.length || Object.keys(imageSearchResults).length)" class="search-result">
+    <div v-if="debouncedKeyword && hasSearchResults" class="search-result">
       <!-- 表格数据搜索结果 -->
       <div v-if="tableSearchResults.length">
         <h3>代码搜索结果（共 {{ tableSearchResults.length }} 条）</h3>
         <el-table :data="tableSearchResults" border style="width: 100%">
-          <el-table-column v-for="col in searchResultColumns" :key="col.prop" :prop="col.prop" :label="col.label" :width="col.width">
+          <el-table-column v-for="col in searchResultColumns" :key="col.prop" v-bind="col">
             <template #default="{ row }">
               <span v-html="highlightKeyword(row[col.prop])"></span>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+
+      <!-- 螺丝攻牙钻孔对照表搜索结果 -->
+      <div v-if="screwTableSearchResults.length" class="image-search-result">
+        <h3>螺丝攻牙钻孔对照表搜索结果（共 {{ screwTableSearchResults.length }} 条）</h3>
+        <el-table :data="screwTableSearchResults" border style="width: 100%">
+          <el-table-column v-for="(col, index) in screwTableColumns" :key="col.prop || `empty-${index}`" v-bind="col">
+            <template #default="{ row }">
+              <span v-if="col.prop" v-html="highlightKeyword(row[col.prop])"></span>
             </template>
           </el-table-column>
         </el-table>
@@ -42,16 +54,23 @@
     <!-- 原始标签页 -->
     <el-tabs v-else v-model="activeTab" type="card">
       <el-tab-pane v-for="tab in tabs" :key="tab.name" :label="tab.label" :name="tab.name">
-        <el-table v-if="tab.isTable" :data="tab.data" border style="width: 100%">
-          <el-table-column type="index" label="序号" width="80" />
-          <el-table-column v-for="col in tab.columns" :key="col.prop" v-bind="col" />
-        </el-table>
-        <div v-else class="image-grid">
-          <div v-for="(img, fileName) in tab.data" :key="fileName" class="image-item" @click="openImagePreview(img, fileName)">
-            <img :src="img" :alt="fileName" class="thumbnail" />
-            <span class="image-name" :title="fileName">{{ fileName }}</span>
+        <template v-if="['code1', 'code2'].includes(tab.name)">
+          <el-table :data="tab.data" border style="width: 100%">
+            <el-table-column type="index" label="序号" width="80" />
+            <el-table-column v-for="col in tab.columns" :key="col.prop" v-bind="col" />
+          </el-table>
+        </template>
+        <template v-else-if="tab.name === 'code3'">
+          <div class="image-grid">
+            <div v-for="(img, fileName) in tab.data" :key="fileName" class="image-item" @click="openImagePreview(img, fileName)">
+              <img :src="img" :alt="fileName" class="thumbnail" />
+              <span class="image-name" :title="fileName">{{ fileName }}</span>
+            </div>
           </div>
-        </div>
+        </template>
+        <template v-else-if="tab.name === 'code4'">
+          <code4 :data="tab.data" />
+        </template>
       </el-tab-pane>
     </el-tabs>
 
@@ -84,155 +103,49 @@
 </template>
 
 <script setup>
-import { tabs } from './data'
-import * as XLSX from 'xlsx'
-import { saveAs } from 'file-saver'
+import { ref, computed } from 'vue'
+import { tabs } from './data.js'
+import code4 from './components/code4.vue'
+import { useSearch } from './hooks/useSearch.js'
+import { useExport } from './hooks/useExport.js'
+import { useImagePreview } from './hooks/useImagePreview.js'
 
 const activeTab = ref('code1')
-const searchText = ref('')
-const debouncedKeyword = ref('')
 
-// 图片预览相关
-const previewVisible = ref(false)
-const previewImage = ref('')
-const previewFileName = ref('')
+const { searchText, debouncedKeyword, highlightKeyword, tableSearchResults, imageSearchResults, screwTableSearchResults, resetSearch } =
+  useSearch(tabs)
 
-const openImagePreview = (img, fileName) => {
-  previewImage.value = img
-  previewFileName.value = fileName
-  previewVisible.value = true
-  document.body.style.overflow = 'hidden'
-}
+const { exportMarkdown, exportExcel } = useExport(tabs)
 
-const closePreview = () => {
-  previewVisible.value = false
-  document.body.style.overflow = ''
-}
+const { previewVisible, previewImage, previewFileName, openImagePreview, closePreview } = useImagePreview()
 
-// 防抖函数
-let debounceTimer = null
-const debounce = (fn, delay = 300) => {
-  if (debounceTimer) clearTimeout(debounceTimer)
-  debounceTimer = setTimeout(fn, delay)
-}
-
-// 监听搜索文本变化，使用防抖
-watch(searchText, (val) => {
-  debounce(() => {
-    debouncedKeyword.value = val.toLowerCase().trim()
-  })
+const hasSearchResults = computed(() => {
+  return tableSearchResults.value.length > 0 || Object.keys(imageSearchResults.value).length > 0 || screwTableSearchResults.value.length > 0
 })
 
-// 组件卸载时清除定时器
-onUnmounted(() => {
-  if (debounceTimer) clearTimeout(debounceTimer)
-})
-
-// 搜索结果表格列配置
 const searchResultColumns = [
   { prop: 'category', label: '分类', width: 200 },
   { prop: 'code', label: '代码', width: 250 },
   { prop: 'description', label: '注解' },
 ]
 
-// 高亮关键词函数
-const highlightKeyword = (text) => {
-  if (!debouncedKeyword.value) return text
-  const regex = new RegExp(`(${debouncedKeyword.value})`, 'gi')
-  return String(text).replace(regex, '<span class="highlight">$1</span>')
-}
-
-// 表格数据搜索结果
-const tableSearchResults = computed(() => {
-  const keyword = debouncedKeyword.value
-  if (!keyword) return []
-
-  const results = []
-  tabs.forEach((tab) => {
-    if (tab.isTable) {
-      tab.data.forEach((item) => {
-        if (Object.values(item).some((val) => String(val).toLowerCase().includes(keyword))) {
-          results.push({
-            category: tab.label,
-            code: item.code,
-            description: item.description,
-          })
-        }
-      })
-    }
-  })
-  return results
-})
-
-// 图片数据搜索结果
-const imageSearchResults = computed(() => {
-  const keyword = debouncedKeyword.value
-  if (!keyword) return {}
-
-  const results = {}
-  tabs.forEach((tab) => {
-    if (!tab.isTable && typeof tab.data === 'object') {
-      for (const [fileName, img] of Object.entries(tab.data)) {
-        if (fileName.toLowerCase().includes(keyword.toLowerCase())) {
-          results[fileName] = img
-        }
-      }
-    }
-  })
-
-  return results
-})
-
-const resetSearch = () => {
-  searchText.value = ''
-  debouncedKeyword.value = ''
-}
-
-// 导出 Markdown
-const exportMarkdown = () => {
-  let mdContent = '# CNC 代码注解表\n\n'
-
-  tabs.forEach((tab) => {
-    if (tab.isTable) {
-      mdContent += `## ${tab.label}\n\n`
-      mdContent += '| 代码 | 注解 |\n'
-      mdContent += '| :--- | :--- |\n'
-
-      tab.data.forEach((item) => {
-        mdContent += `| ${item.code} | ${item.description} |\n`
-      })
-      mdContent += '\n'
-    }
-  })
-
-  const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' })
-  saveAs(blob, 'CNC 代码注解表.md')
-}
-
-// 导出 Excel
-const exportExcel = () => {
-  const wb = XLSX.utils.book_new()
-
-  tabs.forEach((tab) => {
-    if (tab.isTable) {
-      const data = tab.data.map((item) => ({
-        代码: item.code,
-        注解: item.description,
-      }))
-      const ws = XLSX.utils.json_to_sheet(data)
-      XLSX.utils.book_append_sheet(wb, ws, tab.label)
-    }
-  })
-
-  const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-  const blob = new Blob([wbout], { type: 'application/octet-stream' })
-  saveAs(blob, 'CNC 代码注解表.xlsx')
-}
+const screwTableColumns = [
+  { prop: 'coarse_spec', label: '公制粗螺纹规格(单位:mm)', width: 120 },
+  { prop: 'coarse_std', label: '标准径', width: 100 },
+  { prop: 'coarse_max', label: '最大', width: 100 },
+  { prop: 'coarse_min', label: '最小', width: 100 },
+  { width: 60 },
+  { prop: 'fine_spec', label: '公制细螺纹规格(单位:mm)', width: 120 },
+  { prop: 'fine_std', label: '标准径', width: 100 },
+  { prop: 'fine_max', label: '最大', width: 100 },
+  { prop: 'fine_min', label: '最小', width: 100 },
+]
 </script>
 
 <style lang="scss" scoped>
 .cad-shortcut-key {
   padding: 20px;
+
   .search-container {
     display: flex;
     align-items: center;
@@ -240,19 +153,23 @@ const exportExcel = () => {
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
     gap: 20px;
+
     h1 {
       font-size: 24px;
       font-weight: bold;
     }
   }
+
   .search-result {
     margin-bottom: 20px;
+
     h3 {
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 16px;
       color: #666;
     }
+
     :deep(.highlight) {
       background-color: #ffeb3b;
       color: #d32f2f;
@@ -261,6 +178,7 @@ const exportExcel = () => {
       border-radius: 2px;
     }
   }
+
   .no-result {
     padding: 40px 0;
     text-align: center;
@@ -323,7 +241,6 @@ const exportExcel = () => {
 }
 </style>
 
-<!-- 弹窗样式必须放在全局样式中，因为 Teleport 会把元素移到 body 上 -->
 <style lang="scss">
 .image-preview-overlay {
   position: fixed;
@@ -408,6 +325,7 @@ const exportExcel = () => {
     opacity: 1;
   }
 }
+
 .image-search-result {
   margin-top: 20px;
 }

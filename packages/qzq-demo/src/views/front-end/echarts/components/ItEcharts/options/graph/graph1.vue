@@ -8,26 +8,22 @@
       <div class="btn-right">
         <div @click="refresh">
           <span
-            ><el-icon>
-              <Refresh /> </el-icon></span
+            ><el-icon> <Refresh /> </el-icon></span
           >还原
         </div>
         <div @click="zoomIn">
           <span
-            ><el-icon>
-              <ZoomIn /> </el-icon></span
+            ><el-icon> <ZoomIn /> </el-icon></span
           >放大
         </div>
         <div @click="zoomOut">
           <span
-            ><el-icon>
-              <ZoomOut /> </el-icon></span
+            ><el-icon> <ZoomOut /> </el-icon></span
           >缩小
         </div>
         <div @click="downLoad">
           <span
-            ><el-icon>
-              <Download /> </el-icon></span
+            ><el-icon> <Download /> </el-icon></span
           >保存
         </div>
       </div>
