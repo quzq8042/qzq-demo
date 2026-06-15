@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 
+import './utils/rem'
+
 import Cookies from 'js-cookie'
 
 import ElementPlus from 'element-plus'

@@ -3,6 +3,7 @@ import path from 'path'
 import createVitePlugins from './vite/plugins'
 const packageJson = require('./package.json')
 const version = packageJson.version
+import postCssPxToRem from 'postcss-pxtorem'
 
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, './mode')
@@ -37,16 +38,12 @@ export default defineConfig(({ mode, command }) => {
     css: {
       postcss: {
         plugins: [
-          {
-            postcssPlugin: 'internal:charset-removal',
-            AtRule: {
-              charset: (atRule) => {
-                if (atRule.name === 'charset') {
-                  atRule.remove()
-                }
-              },
-            },
-          },
+          postCssPxToRem({
+            // 自适应，px>rem转换
+            rootValue: 16, // 75表示750设计稿，37.5表示375设计稿
+            propList: ['*'], // 需要转换的属性，这里选择全部都进行转换
+            selectorBlackList: [],
+          }),
         ],
       },
     },
