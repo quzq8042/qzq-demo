@@ -1,10 +1,19 @@
 <template>
   <div class="page-login">
     <div v-for="i in 5" :key="i" :class="`layer${i}`"></div>
+    <LoginAnimation ref="animationRef" />
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
       <h2 class="login-title"><img class="logo" src="../assets/images/logo.webp" alt="logo" />工设绘记</h2>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" size="large" auto-complete="off" placeholder="账号">
+        <el-input
+          v-model="loginForm.username"
+          type="text"
+          size="large"
+          auto-complete="off"
+          placeholder="账号"
+          @focus="handleUsernameFocus"
+          @blur="handleUsernameBlur"
+        >
           <template #prefix><svg-icon icon-class="loginuser" class="el-input__icon input-icon" /></template>
         </el-input>
       </el-form-item>
@@ -16,6 +25,8 @@
           auto-complete="off"
           placeholder="密码"
           @keyup.enter="handleLogin"
+          @focus="handlePasswordFocus"
+          @blur="handlePasswordBlur"
         >
           <template #prefix><svg-icon icon-class="loginpass" class="el-input__icon input-icon" /></template>
         </el-input>
@@ -38,6 +49,7 @@ import useUserStore from '@/store/modules/user'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import Calendar from '@/components/Calendar/index.vue'
+import LoginAnimation from '@/components/LoginAnimation/index.vue'
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -59,6 +71,23 @@ const loginRules = {
 }
 
 const loading = ref(false)
+const animationRef = ref(null)
+
+function handleUsernameFocus() {
+  animationRef.value?.handleUsernameFocus()
+}
+
+function handleUsernameBlur() {
+  animationRef.value?.handleUsernameBlur()
+}
+
+function handlePasswordFocus() {
+  animationRef.value?.handlePasswordFocus()
+}
+
+function handlePasswordBlur() {
+  animationRef.value?.handlePasswordBlur()
+}
 
 function handleLogin() {
   proxy.$refs.loginRef.validate((valid) => {
