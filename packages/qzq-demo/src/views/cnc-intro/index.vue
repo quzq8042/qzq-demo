@@ -494,10 +494,12 @@ const toggleFaq = (index) => {
   .about-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 60px;
     align-items: center;
+    .about-text {
+      padding: 20px;
+    }
   }
 
   .section-title {
