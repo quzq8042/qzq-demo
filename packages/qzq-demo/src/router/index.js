@@ -36,7 +36,7 @@ export const constantRoutes = [
         path: '/index',
         component: () => import('@/views/home/index'),
         name: 'Home',
-        meta: { title: '个人简历', icon: 'dashboard', affix: true },
+        meta: { title: '个人简历', icon: 'dashboard', affix: true, requireQz: true },
       },
       {
         path: '/cnc',
@@ -64,7 +64,7 @@ export const constantRoutes = [
         component: ViewLayout,
         name: 'front-end',
         redirect: '/front-end/style-effect',
-        meta: { title: '前端', icon: 'dashboard', affix: true },
+        meta: { title: '前端', icon: 'dashboard', affix: true, requireQz: true },
         children: [
           {
             path: '/front-end/style-effect',

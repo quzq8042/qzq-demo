@@ -24,28 +24,30 @@ import { getToken } from '@/utils/auth'
 import { decrypt } from '@/utils/jsencrypt'
 const router = useRouter()
 
-// 从路由配置中提取导航项（根据用户权限过滤）
 const navRoutes = computed(() => {
-  // 直接从 cookie 读取用户名（解密后），确保页面刷新后仍能正确过滤
-  const encryptedUsername = getToken()
-  const username = encryptedUsername ? decrypt(encryptedUsername) : null
+  const token = getToken()
+  const isQz = token ? decrypt(token) === import.meta.env.VITE_APP_LOGINNAME_ADMIN : false
+
   return router.options.routes
     .flatMap((route) => {
-      // 处理嵌套路由
       if (route.children && route.children.length > 0) {
         return route.children.filter((child) => {
-          // admin 用户不能看到 /index 路由
-          if (username === 'admin' && child.path === '/index') {
+          if (child.hidden) {
             return false
           }
-          return !child.hidden
+          if (!isQz && child.meta?.requireQz) {
+            return false
+          }
+          return true
         })
       }
-      // admin 用户不能看到 /index 路由
-      if (username === 'admin' && route.path === '/index') {
+      if (route.hidden) {
         return []
       }
-      return route.hidden ? [] : [route]
+      if (!isQz && route.meta?.requireQz) {
+        return []
+      }
+      return [route]
     })
     .filter((route) => route.meta && route.meta.title)
 })

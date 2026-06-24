@@ -16,17 +16,12 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      // 权限控制：admin 用户不能访问 /index 和 / 路由，
-      // 直接从 cookie 读取用户名（解密后），确保页面刷新后仍能正确拦截
-      const encryptedUsername = getToken()
-      const username = encryptedUsername ? decrypt(encryptedUsername) : null
-      if (username === 'admin' && to.path === '/index') {
-        ElMessage.warning('当前账号无权限访问此页面')
-        next({ path: '/cnc', replace: true }) // 重定向到作品集页面，replace防止回退
-        NProgress.done()
+      const token = getToken()
+      const isQz = token ? decrypt(token) === import.meta.env.VITE_APP_LOGINNAME_ADMIN : false
+      if (to.meta.requireQz && !isQz) {
+        next('/401')
         return
       }
-
       next()
     }
   } else {

@@ -128,7 +128,7 @@ const code2Data = [
   { code: 'Z', description: '轴坐标值' },
 ]
 
-const code4Data = ref([
+const code4Data = [
   {
     coarse_spec: 'M1.0x0.25',
     coarse_std: '0.75',
@@ -479,7 +479,7 @@ const code4Data = ref([
     fine_max: '10.912',
     fine_min: '10.647',
   },
-])
+]
 
 const columns = [
   { prop: 'code', label: '代码', width: 250 },

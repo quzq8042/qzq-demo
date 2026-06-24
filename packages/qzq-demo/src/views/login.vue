@@ -204,6 +204,7 @@ function handleLogin() {
 }
 </style>
 <style scoped lang="scss">
+@use 'sass:math';
 @function star($n) {
   $result: '#{random(100)}vw #{random(100)}vh 0 #fff';
   @for $i from 2 through $n {
@@ -215,8 +216,8 @@ $n: 5;
 $duration: 400s;
 $count: 1000;
 @for $i from 1 through $n {
-  $duration: floor($duration / 2);
-  $count: floor($count / 2);
+  $duration: floor(math.div($duration, 2));
+  $count: floor(math.div($count, 2));
   .layer#{$i} {
     position: fixed;
     top: 0;
