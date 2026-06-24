@@ -7,7 +7,7 @@ import { decrypt } from '@/utils/jsencrypt'
 
 NProgress.configure({ showSpinner: false })
 
-const whiteList = ['/login']
+const whiteList = ['/login', '/']
 router.beforeEach((to, from, next) => {
   NProgress.start()
   // next()
@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
       // 在免登录白名单，直接进入
       next()
     } else {
-      next(`/login`) // 否则全部重定向到登录页
+      next(`/login?redirect=${encodeURIComponent(to.fullPath)}`) // 否则全部重定向到登录页，并携带原本要访问的路径
       NProgress.done()
     }
   }

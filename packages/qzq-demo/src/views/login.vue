@@ -31,11 +31,15 @@
           <template #prefix><svg-icon icon-class="loginpass" class="el-input__icon input-icon" /></template>
         </el-input>
       </el-form-item>
-      <el-form-item style="width: 100%">
-        <el-button class="login-btn" :loading="loading" size="large" type="primary" style="width: 100%" @click.prevent="handleLogin">
-          <span v-if="!loading">登 录</span>
-          <span v-else>登 录 中...</span>
-        </el-button>
+      <el-form-item>
+        <div class="login-btn-container">
+          <router-link to="/" class="return-home login-btn"> 返回首页 </router-link>
+
+          <el-button class="login-btn" :loading="loading" size="large" type="primary" @click.prevent="handleLogin">
+            <span v-if="!loading">登 录</span>
+            <span v-else>登 录 中...</span>
+          </el-button>
+        </div>
       </el-form-item>
     </el-form>
     <Calendar />
@@ -114,7 +118,8 @@ function handleLogin() {
           password: rsaEncrypt(loginForm.value.password),
         })
         .then(() => {
-          router.push({ path: '/' })
+          const redirect = route.query.redirect || '/subroutine'
+          router.push({ path: redirect })
         })
         .catch(() => {
           loading.value = false
@@ -192,7 +197,15 @@ function handleLogin() {
     margin-left: 0px;
   }
 }
+.login-btn-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
 .login-btn {
+  width: 50%;
   height: 48px;
   border-radius: 6px 6px 6px 6px;
   font-weight: bold;
@@ -201,6 +214,12 @@ function handleLogin() {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   line-height: 16px;
   border: none !important;
+}
+.return-home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 </style>
 <style scoped lang="scss">
