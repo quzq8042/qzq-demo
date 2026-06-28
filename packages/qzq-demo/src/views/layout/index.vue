@@ -16,6 +16,8 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
 import { watch, ref, computed } from 'vue'
+import { getToken } from '@/utils/auth'
+import { decrypt } from '@/utils/jsencrypt'
 
 const defaultActive = ref('')
 const navRoutes = ref([])
@@ -38,9 +40,20 @@ const findParentRoute = (routes, currentPath) => {
 }
 
 const updateNavRoutes = (currentPath) => {
+  const token = getToken()
+  const isQz = token ? decrypt(token) === import.meta.env.VITE_APP_LOGINNAME_ADMIN : false
+
   const parentRoute = findParentRoute(router.options.routes, currentPath)
   if (parentRoute && parentRoute.children && parentRoute.children.length > 0) {
-    navRoutes.value = parentRoute.children.filter((child) => !child.hidden).filter((child) => child.meta && child.meta.title)
+    navRoutes.value = parentRoute.children
+      .filter((child) => !child.hidden)
+      .filter((child) => {
+        if (!isQz && child.meta?.requireQz) {
+          return false
+        }
+        return true
+      })
+      .filter((child) => child.meta && child.meta.title)
   } else {
     navRoutes.value = []
   }

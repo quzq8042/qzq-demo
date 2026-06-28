@@ -1,7 +1,7 @@
 <template>
   <div class="cad-shortcut-key">
     <div class="search-container">
-      <h1>CAD 快捷命令</h1>
+      <h1>UG 快捷命令</h1>
       <el-input v-model="searchText" placeholder="搜索命令" clearable style="width: 300px" />
       <el-button type="primary" @click="resetSearch">重置</el-button>
       <el-button type="success" icon="Download" @click="exportMarkdown">导出 Markdown</el-button>
@@ -41,7 +41,7 @@ import { tabs } from './data'
 import * as XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
 
-const activeTab = ref('draw')
+const activeTab = ref('ct')
 const searchText = ref('')
 const debouncedKeyword = ref('')
 
@@ -106,7 +106,7 @@ const resetSearch = () => {
 
 // 导出 Markdown
 const exportMarkdown = () => {
-  let mdContent = '# CAD 快捷命令手册\n\n'
+  let mdContent = '# UG 快捷命令手册\n\n'
 
   tabs.forEach((tab) => {
     mdContent += `## ${tab.label}\n\n`
@@ -120,7 +120,7 @@ const exportMarkdown = () => {
   })
 
   const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' })
-  saveAs(blob, 'CAD 快捷命令手册.md')
+  saveAs(blob, 'UG 快捷命令手册.md')
 }
 
 // 导出 Excel
@@ -139,7 +139,7 @@ const exportExcel = () => {
 
   const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
   const blob = new Blob([wbout], { type: 'application/octet-stream' })
-  saveAs(blob, 'CAD 快捷命令手册.xlsx')
+  saveAs(blob, 'UG快捷命令手册.xlsx')
 }
 </script>
 

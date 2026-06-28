@@ -53,7 +53,13 @@ export const constantRoutes = [
             path: '/cnc/cad-shortcut-key',
             component: () => import('@/views/cnc/cad-shortcut-key/index'),
             name: 'CadShortcutKey',
-            meta: { title: 'CAD | UG 快捷键', icon: 'dashboard' },
+            meta: { title: 'CAD快捷键', icon: 'dashboard' },
+          },
+          {
+            path: '/cnc/ug-shortcut-key',
+            component: () => import('@/views/cnc/ug-shortcut-key/index'),
+            name: 'UGShortcutKey',
+            meta: { title: 'UG 快捷键', icon: 'dashboard', requireQz: true },
           },
           {
             path: '/cnc/cnc-code',

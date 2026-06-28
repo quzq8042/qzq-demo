@@ -92,14 +92,6 @@ const shortcutData = [
   { command: 'V', function: '视图管理器', description: '视图管理器' },
 ]
 
-// UG 快捷键数据
-const ugData = [
-  { command: 'Ctrl + B', function: '隐藏对象', description: '隐藏对象' },
-  { command: 'Ctrl + Shift + B', function: '反隐藏对象', description: '反隐藏对象' },
-  { command: 'Ctrl + J', function: '编辑对象显示', description: '编辑对象显示' },
-  { command: 'Ctrl + T', function: '移动对象', description: '移动对象' },
-]
-
 const columns = [
   { prop: 'command', label: '快捷命令', width: 150 },
   { prop: 'function', label: '功能', width: 250 },
@@ -129,12 +121,6 @@ export const tabs = [
     name: 'command',
     label: '常用快捷键',
     data: shortcutData,
-    columns,
-  },
-  {
-    name: 'ug',
-    label: 'UG快捷键',
-    data: ugData,
     columns,
   },
 ]
