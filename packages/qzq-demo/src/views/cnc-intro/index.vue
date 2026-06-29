@@ -1,38 +1,40 @@
 <template>
   <div class="cnc-intro">
     <!-- Hero Section -->
-    <div class="hero-section">
-      <div class="hero-content">
-        <div class="hero-title">
-          <span class="title-icon">⚙️</span>
-          <h1>CNC 数控加工助手</h1>
-        </div>
-        <p class="hero-subtitle">专业的 CNC 编程工具集合，助力高效加工</p>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-number">{{ features.length }}</span>
-            <span class="stat-label">核心模块</span>
+    <div style="background-color: #ffffff">
+      <div class="hero-section">
+        <div class="hero-content">
+          <div class="hero-title">
+            <span class="title-icon">⚙️</span>
+            <h1>CNC 数控加工助手</h1>
           </div>
-          <div class="stat-item">
-            <span class="stat-number">100+</span>
-            <span class="stat-label">快捷命令</span>
+          <p class="hero-subtitle">专业的 CNC 编程工具集合，助力高效加工</p>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number">{{ features.length }}</span>
+              <span class="stat-label">核心模块</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">100+</span>
+              <span class="stat-label">快捷命令</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">CNC代码</span>
+            </div>
           </div>
-          <div class="stat-item">
-            <span class="stat-number">50+</span>
-            <span class="stat-label">CNC代码</span>
+          <div class="hero-actions">
+            <button class="action-btn primary" @click="navigateTo('/cnc/cad-shortcut-key')">开始使用</button>
           </div>
         </div>
-        <div class="hero-actions">
-          <button class="action-btn primary" @click="navigateTo('/cnc/cad-shortcut-key')">开始使用</button>
+        <div class="hero-decoration">
+          <div class="floating-icon icon-1">🔧</div>
+          <div class="floating-icon icon-2">⚡</div>
+          <div class="floating-icon icon-3">📐</div>
+          <div class="floating-icon icon-4">🛠️</div>
+          <div class="floating-icon icon-5">🔩</div>
+          <div class="floating-icon icon-6">⚙️</div>
         </div>
-      </div>
-      <div class="hero-decoration">
-        <div class="floating-icon icon-1">🔧</div>
-        <div class="floating-icon icon-2">⚡</div>
-        <div class="floating-icon icon-3">📐</div>
-        <div class="floating-icon icon-4">🛠️</div>
-        <div class="floating-icon icon-5">🔩</div>
-        <div class="floating-icon icon-6">⚙️</div>
       </div>
     </div>
 
@@ -320,6 +322,7 @@ const toggleFaq = (index) => {
 <style lang="scss" scoped>
 .cnc-intro {
   min-height: 100vh;
+  overflow: hidden;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 50%, #f0f4f8 100%);
 }
 
@@ -368,6 +371,7 @@ const toggleFaq = (index) => {
   .hero-stats {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 60px;
     margin-bottom: 50px;
 
@@ -495,10 +499,12 @@ const toggleFaq = (index) => {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
+    flex-wrap: wrap;
     gap: 60px;
     align-items: center;
     .about-text {
       padding: 20px;
+      flex: 1;
     }
   }
 

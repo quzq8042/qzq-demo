@@ -210,13 +210,13 @@ const handleLeave = () => {
 }
 @for $i from 1 through 9 {
   .items:nth-child(#{$i}) {
-    background-color: hsl($i * 40%, 100%, 80%);
+    background-color: hsl($i * 40deg, 100%, 80%);
   }
 
   // 当鼠标悬停在第 $i 个格子上时，放大对应行和列
   .rotation-items:has(.items:nth-child(#{$i}):hover) {
     // 计算当前格子所在的行号 (1~3)
-    $r: floor(($i - 1) / 3 + 1);
+    $r: floor(calc(($i - 1) / 3) + 1);
     // 计算当前格子所在的列号 (1~3)
     $c: ($i - 1) % 3 + 1;
     // 创建初始网格比例列表

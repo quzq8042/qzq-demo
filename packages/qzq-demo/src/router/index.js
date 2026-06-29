@@ -73,6 +73,12 @@ export const constantRoutes = [
             name: 'CncLog',
             meta: { title: '代码记录', icon: 'dashboard' },
           },
+          {
+            path: '/cnc/calculator',
+            component: () => import('@/views/cnc/calculator/index'),
+            name: 'Calculator',
+            meta: { title: '计算器', icon: 'dashboard', requireQz: true },
+          },
         ],
       },
       {
