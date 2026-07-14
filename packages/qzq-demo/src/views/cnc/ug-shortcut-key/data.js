@@ -144,39 +144,38 @@ const wcsData = [
   { command: 'Alt+6', function: '保存', description: '工作坐标系' },
 ]
 
-// ============ 插入 ============
+// ============ 插入曲线 ============
 const insertData = [
-  { command: 'Shift+K', function: '草图', description: '插入' },
+  { command: 'S', function: '在任务环境中绘制草图', description: '插入' },
   { command: 'B', function: '基本曲线', description: '插入--曲线' },
-  { command: 'S', function: '样条曲线', description: '插入--曲线' },
+  // { command: 'S', function: '', description: '插入--曲线' },
   { command: 'P', function: '点', description: '插入--曲线' },
-  { command: 'Q', function: '点集', description: '插入--曲线' },
-  { command: 'Shift+R', function: '矩形', description: '插入--曲线' },
-  { command: 'Shift+Y', function: '多边形', description: '插入--曲线' },
-  { command: 'Shift+H', function: '螺旋', description: '插入--曲线' },
-  { command: 'Shift+W', function: '规律曲线', description: '插入--曲线' },
+  // { command: 'Q', function: '点集', description: '插入--曲线' },
+  // { command: 'Shift+R', function: '矩形', description: '插入--曲线' },
+  // { command: 'Shift+Y', function: '多边形', description: '插入--曲线' },
+  // { command: 'Shift+H', function: '螺旋', description: '插入--曲线' },
+  // { command: 'Shift+W', function: '规律曲线', description: '插入--曲线' },
   { command: 'Shift+O', function: '偏置曲线', description: '插入--曲线操作' },
-  { command: 'Shift+B', function: '桥接曲线', description: '插入--曲线操作' },
-  { command: 'Shift+M', function: '简化曲线', description: '插入--曲线操作' },
   { command: 'Shift+J', function: '合并曲线', description: '插入--曲线操作' },
-  { command: 'Shift+P', function: '投影', description: '插入--曲线操作' },
-  { command: 'Shift+N', function: '组合投影', description: '插入--曲线操作' },
-  { command: 'Shift+I', function: '相交', description: '插入--曲线操作' },
-  { command: 'Shift+S', function: '截面', description: '插入--曲线操作' },
-  { command: 'Shift+X', function: '抽取', description: '插入--曲线操作' },
-  { command: 'Shift+F', function: '在曲面上偏置', description: '插入--曲线操作' },
+  { command: 'Shift+M', function: '简化曲线', description: '插入--曲线操作' },
+  { command: 'Shift+B', function: '桥接曲线', description: '插入--曲线操作' },
+  { command: 'Shift+P', function: '投影曲线', description: '插入--曲线操作' },
+  // { command: 'Shift+N', function: '组合投影', description: '插入--曲线操作' },
+  { command: 'Shift+I', function: '相交曲线', description: '插入--曲线操作' },
+  // { command: 'Shift+S', function: '截面', description: '插入--曲线操作' },
+  { command: 'Shift+X', function: '抽取曲线', description: '插入--曲线操作' },
+  // { command: 'Shift+F', function: '在曲面上偏置', description: '插入--曲线操作' },
 ]
 
 // ============ 成型特征 ============
 const featureData = [
-  { command: 'D', function: '基准平面', description: '成型特征' },
   { command: 'X', function: '拉伸', description: '成型特征' },
   { command: 'V', function: '回转', description: '成型特征' },
+  { command: 'Alt+D', function: '基准平面', description: '成型特征' },
   { command: 'Alt+W', function: '扫掠向导', description: '成型特征' },
   { command: 'Alt+H', function: '孔', description: '成型特征' },
   { command: 'Alt+B', function: '圆台', description: '成型特征' },
   { command: 'Alt+K', function: '腔体', description: '成型特征' },
-  { command: 'Alt+D', function: '凸垫', description: '成型特征' },
   { command: 'Alt+L', function: '键槽', description: '成型特征' },
   { command: 'Alt+G', function: '沟槽', description: '成型特征' },
   { command: 'Alt+X', function: '提取', description: '成型特征' },
@@ -188,23 +187,23 @@ const featureData = [
 
 // ============ 特征操作 ============
 const featureOpData = [
+  { command: 'Alt+A', function: '缩放体', description: '特征操作' },
+  { command: 'H', function: '抽壳', description: '特征操作' },
+  { command: 'Alt+U', function: '合并', description: '特征操作' },
+  { command: 'Alt+S', function: '减去', description: '特征操作' },
+  { command: 'Alt+I', function: '相交', description: '特征操作' },
   { command: 'Alt+T', function: '拔锥', description: '特征操作' },
   { command: 'Alt+Y', function: '体拔模', description: '特征操作' },
   { command: 'Alt+E', function: '边圆角', description: '特征操作' },
   { command: 'Alt+F', function: '面圆角', description: '特征操作' },
   { command: 'Shift+Alt+F', function: '软圆角', description: '特征操作' },
   { command: 'Alt+C', function: '倒角', description: '特征操作' },
-  { command: 'H', function: '抽壳', description: '特征操作' },
   { command: 'I', function: '引用', description: '特征操作' },
   { command: 'E', function: '缝合', description: '特征操作' },
   { command: 'Alt+M', function: '简化', description: '特征操作' },
   { command: 'Alt+O', function: '偏置表面', description: '特征操作' },
-  { command: 'Alt+A', function: '比例', description: '特征操作' },
   { command: 'T', function: '裁剪', description: '特征操作' },
   { command: 'Alt+P', function: '分割', description: '特征操作' },
-  { command: 'Alt+U', function: '加', description: '特征操作' },
-  { command: 'Alt+S', function: '减', description: '特征操作' },
-  { command: 'Alt+I', function: '相交', description: '特征操作' },
 ]
 
 // ============ 自由形式特征 ============
@@ -315,7 +314,7 @@ export const tabs = [
   },
   {
     name: 'insert',
-    label: '插入',
+    label: '插入-曲线',
     data: insertData,
     columns,
   },

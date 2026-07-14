@@ -224,7 +224,7 @@ const features = [
   {
     name: 'cad-shortcut-key',
     icon: '⌨️',
-    title: 'CAD | UG 快捷键',
+    title: '快捷命令搜索',
     description: '收录常用的 CAD 和 UG 快捷命令，支持搜索、导出 Markdown 和 Excel 格式',
     tags: ['CAD', 'UG', '快捷键'],
     path: '/cnc/cad-shortcut-key',
