@@ -79,12 +79,6 @@ export const constantRoutes = [
             name: 'Calculator',
             meta: { title: '计算器', icon: 'dashboard', requireQz: true },
           },
-          {
-            path: '/cnc/file-viewer',
-            component: () => import('@/views/cnc/file-viewer/index'),
-            name: 'CncFileViewer',
-            meta: { title: '文件管理', icon: 'dashboard', requireQz: true },
-          },
         ],
       },
       {
