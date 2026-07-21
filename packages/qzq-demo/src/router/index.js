@@ -83,7 +83,7 @@ export const constantRoutes = [
             path: '/cnc/file-viewer',
             component: () => import('@/views/cnc/file-viewer/index'),
             name: 'CncFileViewer',
-            meta: { title: '文件管理', icon: 'dashboard' },
+            meta: { title: '文件管理', icon: 'dashboard', requireQz: true },
           },
         ],
       },
