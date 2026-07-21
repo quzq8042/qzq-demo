@@ -53,7 +53,7 @@ export const constantRoutes = [
             path: '/cnc/cad-shortcut-key',
             component: () => import('@/views/cnc/cad-shortcut-key/index'),
             name: 'CadShortcutKey',
-            meta: { title: 'CAD快捷键', icon: 'dashboard' },
+            meta: { title: 'CAD 快捷键', icon: 'dashboard' },
           },
           {
             path: '/cnc/ug-shortcut-key',
@@ -65,7 +65,7 @@ export const constantRoutes = [
             path: '/cnc/cnc-code',
             component: () => import('@/views/cnc/cnc-code/index'),
             name: 'CncCode',
-            meta: { title: 'CNC 代码库', icon: 'dashboard' },
+            meta: { title: 'CNC 相关', icon: 'dashboard' },
           },
           {
             path: '/cnc/cnc-log',
@@ -78,6 +78,12 @@ export const constantRoutes = [
             component: () => import('@/views/cnc/calculator/index'),
             name: 'Calculator',
             meta: { title: '计算器', icon: 'dashboard', requireQz: true },
+          },
+          {
+            path: '/cnc/file-viewer',
+            component: () => import('@/views/cnc/file-viewer/index'),
+            name: 'CncFileViewer',
+            meta: { title: '文件管理', icon: 'dashboard' },
           },
         ],
       },

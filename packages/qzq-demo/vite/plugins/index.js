@@ -7,6 +7,7 @@ import legacy from '@vitejs/plugin-legacy'
 import createAutoImport from './auto-import'
 import createSvgIcon from './svg-icon'
 import createCompression from './compression'
+import createFileServer from './file-server'
 
 const packageJson = require('../../package.json')
 const version = packageJson.version
@@ -35,5 +36,6 @@ export default function createVitePlugins(viteEnv, isBuild = false) {
   vitePlugins.push(createAutoImport())
   vitePlugins.push(createSvgIcon(isBuild))
   isBuild && vitePlugins.push(...createCompression(viteEnv))
+  !isBuild && vitePlugins.push(createFileServer())
   return vitePlugins
 }

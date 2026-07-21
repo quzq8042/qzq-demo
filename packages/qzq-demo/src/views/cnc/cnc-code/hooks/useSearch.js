@@ -42,6 +42,16 @@ export function useSearch(tabs) {
             })
           }
         })
+      } else if (tab.name === 'code33') {
+        tab.data.forEach((item) => {
+          if (Object.values(item).some((val) => String(val).toLowerCase().includes(keyword))) {
+            results.push({
+              category: tab.label,
+              code: item.spec,
+              description: `刀刃直径:${item.diameter}, 刀刃长:${item.length}`,
+            })
+          }
+        })
       }
     })
     return results
@@ -71,7 +81,8 @@ export function useSearch(tabs) {
     const results = []
     tabs.forEach((tab) => {
       if (tab.name === 'code4') {
-        tab.data.value.forEach((item) => {
+        const data = tab.data.value || tab.data
+        data.forEach((item) => {
           if (Object.values(item).some((val) => String(val).toLowerCase().includes(keyword))) {
             results.push(item)
           }

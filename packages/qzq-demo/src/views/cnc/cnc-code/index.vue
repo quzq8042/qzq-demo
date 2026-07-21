@@ -54,7 +54,7 @@
     <!-- 原始标签页 -->
     <el-tabs v-else v-model="activeTab" type="card">
       <el-tab-pane v-for="tab in tabs" :key="tab.name" :label="tab.label" :name="tab.name">
-        <template v-if="['code1', 'code2'].includes(tab.name)">
+        <template v-if="['code1', 'code2', 'code33'].includes(tab.name)">
           <el-table :data="tab.data" border style="width: 100%">
             <el-table-column type="index" label="序号" width="80" />
             <el-table-column v-for="col in tab.columns" :key="col.prop" v-bind="col" />
