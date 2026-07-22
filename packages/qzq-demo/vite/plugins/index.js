@@ -7,7 +7,6 @@ import legacy from '@vitejs/plugin-legacy'
 import createAutoImport from './auto-import'
 import createSvgIcon from './svg-icon'
 import createCompression from './compression'
-import createFileServer from './file-server'
 
 const packageJson = require('../../package.json')
 const version = packageJson.version
