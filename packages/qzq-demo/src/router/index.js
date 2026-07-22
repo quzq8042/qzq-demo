@@ -65,7 +65,7 @@ export const constantRoutes = [
             path: '/cnc/cnc-code',
             component: () => import('@/views/cnc/cnc-code/index'),
             name: 'CncCode',
-            meta: { title: 'CNC 相关', icon: 'dashboard' },
+            meta: { title: 'CNC代码', icon: 'dashboard' },
           },
           {
             path: '/cnc/cnc-log',

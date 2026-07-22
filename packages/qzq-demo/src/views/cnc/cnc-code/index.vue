@@ -1,7 +1,7 @@
 <template>
   <div class="cad-shortcut-key">
     <div class="search-container">
-      <h1>CNC</h1>
+      <h1>CNC 代码</h1>
       <el-input v-model="searchText" placeholder="搜索代码" clearable style="width: 300px" />
       <el-button type="primary" @click="resetSearch">重置</el-button>
       <el-button type="success" icon="Download" @click="exportMarkdown">导出 Markdown</el-button>

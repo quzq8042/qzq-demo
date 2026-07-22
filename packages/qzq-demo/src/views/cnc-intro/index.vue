@@ -27,11 +27,11 @@
               </svg>
             </button>
             <div class="carousel-track" :style="{ transform: `translateX(-${currentFeatureIndex * 100}%)` }">
-              <div v-for="(feature, index) in carouselFeatures" :key="index" class="feature-card">
-                <div class="feature-icon">{{ feature.icon }}</div>
-                <div class="feature-name">{{ feature.name }}</div>
-                <div class="feature-desc">{{ feature.description }}</div>
-                <div class="feature-highlight">{{ feature.highlight }}</div>
+              <div v-for="(item, index) in features" :key="index" class="feature-card">
+                <div class="feature-icon">{{ item.icon }}</div>
+                <div class="feature-name">{{ item.title }}</div>
+                <div class="feature-desc">{{ item.description }}</div>
+                <div class="feature-highlight">{{ item.highlight }}</div>
               </div>
             </div>
             <button class="carousel-arrow carousel-next" :class="{ visible: showArrows }" @click.stop="nextFeature">
@@ -51,7 +51,7 @@
             </button>
             <div class="carousel-dots">
               <button
-                v-for="(_, index) in carouselFeatures"
+                v-for="(_, index) in features"
                 :key="index"
                 class="dot"
                 :class="{ active: currentFeatureIndex === index }"
@@ -251,50 +251,23 @@ const activeFaq = ref(0)
 const currentFeatureIndex = ref(0)
 const showArrows = ref(false)
 
-const carouselFeatures = [
-  {
-    icon: '⌨️',
-    name: '快捷命令搜索',
-    description: '收录常用的 CAD 和 UG 快捷命令',
-    highlight: '支持搜索、导出 Markdown 和 Excel 格式',
-  },
-  {
-    icon: '📝',
-    name: 'CNC 相关',
-    description: '提供丰富的 CNC 加工代码示例',
-    highlight: '包含刀具信息、操作面板等参考资料',
-  },
-  {
-    icon: '📋',
-    name: '相关代码',
-    description: '提供丰富的 CNC 编程代码',
-    highlight: '方便查阅和复用，提升工作效率',
-  },
-  {
-    icon: '🧮',
-    name: '简单的 CNC 材料重量计算工具，方便计算',
-    description: '简单的 CNC 加工计算工具',
-    highlight: '方便计算，提升工作效率',
-  },
-]
-
 const goToFeature = (index) => {
   currentFeatureIndex.value = index
 }
 
 const prevFeature = () => {
-  currentFeatureIndex.value = currentFeatureIndex.value === 0 ? carouselFeatures.length - 1 : currentFeatureIndex.value - 1
+  currentFeatureIndex.value = currentFeatureIndex.value === 0 ? features.length - 1 : currentFeatureIndex.value - 1
 }
 
 const nextFeature = () => {
-  currentFeatureIndex.value = (currentFeatureIndex.value + 1) % carouselFeatures.length
+  currentFeatureIndex.value = (currentFeatureIndex.value + 1) % features.length
 }
 
 let carouselInterval = null
 
 const startCarousel = () => {
   carouselInterval = setInterval(() => {
-    currentFeatureIndex.value = (currentFeatureIndex.value + 1) % carouselFeatures.length
+    currentFeatureIndex.value = (currentFeatureIndex.value + 1) % features.length
   }, 4000)
 }
 
@@ -321,14 +294,16 @@ const features = [
     description: '收录常用的 CAD 和 UG 快捷命令，支持搜索、导出 Markdown 和 Excel 格式',
     tags: ['CAD', 'UG', '快捷键'],
     path: '/cnc/cad-shortcut-key',
+    highlight: '支持搜索、导出 Markdown 和 Excel 格式',
   },
   {
     name: 'cnc-code',
     icon: '📝',
-    title: 'CNC 相关',
+    title: 'CNC代码',
     description: '提供丰富的 CNC 加工代码示例，包含刀具信息、操作面板等参考资料',
     tags: ['G代码', 'M代码', '刀具'],
     path: '/cnc/cnc-code',
+    highlight: '包含刀具信息、操作面板等参考资料',
   },
   {
     name: 'cnc-log',
@@ -337,6 +312,7 @@ const features = [
     description: '记录和管理您的 CNC 编程代码，方便查阅和复用',
     tags: ['记录', '管理', '代码'],
     path: '/cnc/cnc-log',
+    highlight: '方便查阅和复用，提升工作效率',
   },
   {
     name: 'calculator',
@@ -345,6 +321,25 @@ const features = [
     description: '简单的 CNC 材料重量计算工具，方便计算',
     tags: ['计算', '工具'],
     path: '/cnc/calculator',
+    highlight: '方便计算，提升工作效率',
+  },
+  {
+    name: 'cnc-cutting-params',
+    icon: '🔍',
+    title: 'CNC加工参数参考',
+    description: '提供常见材料切削参数、刀具选择指南、主轴转速及进给量参考，适用于UG加工模块',
+    tags: ['CNC', '加工', '参数', '参考'],
+    path: '/cnc/cutting-params',
+    highlight: '提供常见材料切削参数、刀具选择指南、主轴转速及进给量参考',
+  },
+  {
+    name: 'ug-machining-strategy',
+    icon: '🛠️',
+    title: 'UG加工',
+    description: 'UG加工模块的加工类型参考，包括平面铣削、带边界面铣、平面铣等多种类型',
+    tags: ['UG', '加工', '参数', '参考'],
+    path: '/cnc/ug-machining-strategy',
+    highlight: 'mill_planar、mill_contour、hole_making、turning等多种类型',
   },
 ]
 
