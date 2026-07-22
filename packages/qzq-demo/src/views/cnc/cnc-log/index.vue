@@ -1,8 +1,7 @@
 <template>
   <div class="cnc-log-container">
-    <h1 class="page-title">CNC 相关代码</h1>
-
-    <div class="search-box">
+    <div class="search-container">
+      <h1>相关代码</h1>
       <el-input
         v-model="searchText"
         placeholder="搜索标题，如 G代码、M代码、程序示例..."
@@ -89,7 +88,20 @@ const scrollToTarget = (id) => {
 
 <style scoped>
 .cnc-log-container {
-  padding: 24px;
+  padding: 20px;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  gap: 20px;
+  position: relative;
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
 }
 
 .page-title {
@@ -111,8 +123,8 @@ const scrollToTarget = (id) => {
 
 .search-dropdown {
   position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
+  top: 100%;
+  left: 7%;
   width: 400px;
   background: #fff;
   border: 1px solid #e4e7ed;

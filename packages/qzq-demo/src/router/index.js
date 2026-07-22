@@ -79,6 +79,25 @@ export const constantRoutes = [
             name: 'Calculator',
             meta: { title: '计算器', icon: 'dashboard', requireQz: true },
           },
+          {
+            path: '/cnc/cutting-params',
+            component: () => import('@/views/cnc/cutting-params/index'),
+            name: 'CuttingParams',
+            meta: { title: '加工参数参考', icon: 'dashboard', requireQz: true },
+          },
+          {
+            path: '/cnc/ug-machining-strategy',
+            component: () => import('@/views/cnc/ug-machining-strategy/index'),
+            name: 'UgMachiningStrategy',
+            meta: { title: 'UG加工', icon: 'dashboard', requireQz: true },
+          },
+          {
+            path: '/cnc/ug-machining-strategy/detail/:category/:feature',
+            component: () => import('@/views/cnc/ug-machining-strategy/detail/index'),
+            name: 'UgMachiningStrategyDetail',
+            meta: { title: '加工策略详情', icon: 'dashboard', requireQz: true },
+            hidden: true,
+          },
         ],
       },
       {

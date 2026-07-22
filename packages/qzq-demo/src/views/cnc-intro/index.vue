@@ -272,7 +272,7 @@ const carouselFeatures = [
   },
   {
     icon: '🧮',
-    name: '计算器',
+    name: '简单的 CNC 材料重量计算工具，方便计算',
     description: '简单的 CNC 加工计算工具',
     highlight: '方便计算，提升工作效率',
   },
