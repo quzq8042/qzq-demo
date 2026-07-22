@@ -1,6 +1,6 @@
 <template>
   <div class="cnc-log-container">
-    <h1 class="page-title">CNC 代码记录</h1>
+    <h1 class="page-title">CNC 相关代码</h1>
 
     <div class="search-box">
       <el-input

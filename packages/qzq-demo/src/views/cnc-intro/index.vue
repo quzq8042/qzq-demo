@@ -9,31 +9,60 @@
             <h1>CNC 数控加工助手</h1>
           </div>
           <p class="hero-subtitle">专业的 CNC 编程工具集合，助力高效加工</p>
-          <div class="hero-stats">
-            <div class="stat-item">
-              <span class="stat-number">{{ features.length }}</span>
-              <span class="stat-label">核心模块</span>
+
+          <div class="feature-carousel" @mouseenter="showArrows = true" @mouseleave="showArrows = false">
+            <button class="carousel-arrow carousel-prev" :class="{ visible: showArrows }" @click.stop="prevFeature">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <div class="carousel-track" :style="{ transform: `translateX(-${currentFeatureIndex * 100}%)` }">
+              <div v-for="(feature, index) in carouselFeatures" :key="index" class="feature-card">
+                <div class="feature-icon">{{ feature.icon }}</div>
+                <div class="feature-name">{{ feature.name }}</div>
+                <div class="feature-desc">{{ feature.description }}</div>
+                <div class="feature-highlight">{{ feature.highlight }}</div>
+              </div>
             </div>
-            <div class="stat-item">
-              <span class="stat-number">100+</span>
-              <span class="stat-label">快捷命令</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">50+</span>
-              <span class="stat-label">CNC代码</span>
+            <button class="carousel-arrow carousel-next" :class="{ visible: showArrows }" @click.stop="nextFeature">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+            <div class="carousel-dots">
+              <button
+                v-for="(_, index) in carouselFeatures"
+                :key="index"
+                class="dot"
+                :class="{ active: currentFeatureIndex === index }"
+                @click="goToFeature(index)"
+              ></button>
             </div>
           </div>
+
           <div class="hero-actions">
             <button class="action-btn primary" @click="navigateTo('/cnc/cad-shortcut-key')">开始使用</button>
           </div>
-        </div>
-        <div class="hero-decoration">
-          <div class="floating-icon icon-1">🔧</div>
-          <div class="floating-icon icon-2">⚡</div>
-          <div class="floating-icon icon-3">📐</div>
-          <div class="floating-icon icon-4">🛠️</div>
-          <div class="floating-icon icon-5">🔩</div>
-          <div class="floating-icon icon-6">⚙️</div>
         </div>
       </div>
     </div>
@@ -162,7 +191,7 @@
         <div class="preview-card">
           <div class="preview-header">
             <span class="preview-icon">📊</span>
-            <span class="preview-title">CNC代码库</span>
+            <span class="preview-title">相关代码</span>
           </div>
           <div class="preview-content">
             <div class="preview-code">
@@ -219,6 +248,70 @@ X50.</code></pre>
 <script setup>
 const router = useRouter()
 const activeFaq = ref(0)
+const currentFeatureIndex = ref(0)
+const showArrows = ref(false)
+
+const carouselFeatures = [
+  {
+    icon: '⌨️',
+    name: '快捷命令搜索',
+    description: '收录常用的 CAD 和 UG 快捷命令',
+    highlight: '支持搜索、导出 Markdown 和 Excel 格式',
+  },
+  {
+    icon: '📝',
+    name: 'CNC 相关',
+    description: '提供丰富的 CNC 加工代码示例',
+    highlight: '包含刀具信息、操作面板等参考资料',
+  },
+  {
+    icon: '📋',
+    name: '相关代码',
+    description: '提供丰富的 CNC 编程代码',
+    highlight: '方便查阅和复用，提升工作效率',
+  },
+  {
+    icon: '🧮',
+    name: '计算器',
+    description: '简单的 CNC 加工计算工具',
+    highlight: '方便计算，提升工作效率',
+  },
+]
+
+const goToFeature = (index) => {
+  currentFeatureIndex.value = index
+}
+
+const prevFeature = () => {
+  currentFeatureIndex.value = currentFeatureIndex.value === 0 ? carouselFeatures.length - 1 : currentFeatureIndex.value - 1
+}
+
+const nextFeature = () => {
+  currentFeatureIndex.value = (currentFeatureIndex.value + 1) % carouselFeatures.length
+}
+
+let carouselInterval = null
+
+const startCarousel = () => {
+  carouselInterval = setInterval(() => {
+    currentFeatureIndex.value = (currentFeatureIndex.value + 1) % carouselFeatures.length
+  }, 4000)
+}
+
+const stopCarousel = () => {
+  if (carouselInterval) {
+    clearInterval(carouselInterval)
+    carouselInterval = null
+  }
+}
+
+onMounted(() => {
+  startCarousel()
+})
+
+onUnmounted(() => {
+  stopCarousel()
+})
 
 const features = [
   {
@@ -232,7 +325,7 @@ const features = [
   {
     name: 'cnc-code',
     icon: '📝',
-    title: 'CNC 代码库',
+    title: 'CNC 相关',
     description: '提供丰富的 CNC 加工代码示例，包含刀具信息、操作面板等参考资料',
     tags: ['G代码', 'M代码', '刀具'],
     path: '/cnc/cnc-code',
@@ -240,10 +333,18 @@ const features = [
   {
     name: 'cnc-log',
     icon: '📋',
-    title: '代码记录',
+    title: '相关代码',
     description: '记录和管理您的 CNC 编程代码，方便查阅和复用',
     tags: ['记录', '管理', '代码'],
     path: '/cnc/cnc-log',
+  },
+  {
+    name: 'calculator',
+    icon: '🧮',
+    title: '计算器',
+    description: '简单的 CNC 材料重量计算工具，方便计算',
+    tags: ['计算', '工具'],
+    path: '/cnc/calculator',
   },
 ]
 
@@ -270,34 +371,13 @@ const workflowSteps = [
   },
 ]
 
-const testimonials = [
-  {
-    content: '这款工具极大地提升了我的编程效率，快捷键搜索功能非常实用，省去了很多翻手册的时间。',
-    name: '张工程师',
-    title: '高级数控编程师',
-    avatar: '👨‍💼',
-  },
-  {
-    content: 'CNC代码库非常全面，包含了各种加工场景的代码示例，新手也能快速上手。',
-    name: '李技术员',
-    title: 'CNC操作技术员',
-    avatar: '👩‍🔧',
-  },
-  {
-    content: '代码记录功能让我可以轻松管理自己编写的程序，随时查阅和复用，非常方便！',
-    name: '王师傅',
-    title: '资深机械工程师',
-    avatar: '👨‍🔬',
-  },
-]
-
 const faqs = [
   {
     question: '这个工具是免费的吗？',
     answer: '是的，CNC数控加工助手完全免费使用，没有任何隐藏收费或广告。致力于为CNC编程人员提供免费、专业的工具支持。',
   },
   {
-    question: '支持哪些CAD软件的快捷键？',
+    question: '支持哪些软件的快捷键？',
     answer: '目前支持AutoCAD、UG/NX、等主流CAD/CAM软件的快捷键查询，后续还会不断扩展支持更多软件。',
   },
   {
@@ -401,6 +481,138 @@ const toggleFaq = (index) => {
       .stat-label {
         font-size: 15px;
         color: rgba(255, 255, 255, 0.85);
+      }
+    }
+  }
+
+  .feature-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    overflow: hidden;
+    border-radius: 20px;
+
+    &:hover {
+      .carousel-track {
+        animation-play-state: paused;
+      }
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .feature-card {
+      flex: 0 0 100%;
+      padding: 30px 40px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+
+      &:not(:last-child) {
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .feature-icon {
+        font-size: 56px;
+        margin-bottom: 20px;
+        animation: bounce 2s ease-in-out infinite;
+      }
+
+      .feature-name {
+        font-size: 26px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 12px;
+      }
+
+      .feature-desc {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 16px;
+      }
+
+      .feature-highlight {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        padding: 12px 24px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 10;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.35);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      &.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      &.carousel-prev {
+        left: 15px;
+      }
+
+      &.carousel-next {
+        right: 15px;
+      }
+    }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &.active {
+          width: 32px;
+          border-radius: 6px;
+          background: #fff;
+        }
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.7);
+        }
       }
     }
   }
