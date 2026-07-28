@@ -11,6 +11,9 @@
       <el-tab-pane label="工时报价" name="labor">
         <LaborCostCalculator />
       </el-tab-pane>
+      <el-tab-pane label="球刀加工步距与残余高度之间的换算" name="ballnose">
+        <BallnoseStepHeightCalculator />
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -19,6 +22,7 @@
 import { ref } from 'vue'
 import MaterialWeightCalculator from './components/MaterialWeightCalculator/index.vue'
 import LaborCostCalculator from './components/LaborCostCalculator/index.vue'
+import BallnoseStepHeightCalculator from './components/BallnoseStepHeightCalculator/index.vue'
 
 const activeTab = ref('weight')
 </script>
