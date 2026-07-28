@@ -39,7 +39,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { strategyCategories } from './data.js'
+import { strategyCategories } from './data/index.js'
 
 const router = useRouter()
 

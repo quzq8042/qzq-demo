@@ -64,7 +64,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { strategyCategories } from '../data.js'
+import { strategyCategories } from '../data/index.js'
 
 const router = useRouter()
 const route = useRoute()
