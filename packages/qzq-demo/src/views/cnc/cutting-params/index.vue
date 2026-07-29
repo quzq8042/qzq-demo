@@ -6,20 +6,6 @@
           <h1>CNC加工参数参考</h1>
           <p>提供常见材料切削参数、刀具选择指南、主轴转速及进给量参考，适用于UG加工模块</p>
         </div>
-        <div class="header-stats">
-          <div class="stat-item">
-            <span class="stat-value">16+</span>
-            <span class="stat-label">材料类型</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">10+</span>
-            <span class="stat-label">刀具类型</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">80+</span>
-            <span class="stat-label">参数配置</span>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -126,34 +112,6 @@ const activeTab = ref('material')
         line-height: 1.6;
       }
     }
-
-    .header-stats {
-      display: flex;
-      gap: 32px;
-
-      .stat-item {
-        text-align: center;
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        padding: 12px 20px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-
-        .stat-value {
-          display: block;
-          font-size: 24px;
-          font-weight: 700;
-          line-height: 1;
-        }
-
-        .stat-label {
-          display: block;
-          font-size: 12px;
-          margin-top: 4px;
-          opacity: 0.85;
-        }
-      }
-    }
   }
 
   .tabs-container {
@@ -200,24 +158,6 @@ const activeTab = ref('material')
 
     :deep(.el-tabs__content) {
       padding: 16px 8px;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .cutting-params {
-    .page-header {
-      padding: 20px;
-
-      .header-content {
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .header-stats {
-        width: 100%;
-        justify-content: center;
-      }
     }
   }
 }

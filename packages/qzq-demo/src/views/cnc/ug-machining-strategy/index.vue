@@ -9,7 +9,7 @@
         <div class="category-header">
           <span class="category-icon">{{ category.icon }}</span>
           <div class="category-info">
-            <h3>{{ category.name }}</h3>
+            <h3>{{ category.name }}（{{ category.features.length }}）</h3>
             <span class="category-label">{{ category.chinese }}</span>
           </div>
         </div>
@@ -138,7 +138,7 @@ const goToDetail = (category, feature) => {
 
 .feature-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   padding: 12px;
   background: #fff;
