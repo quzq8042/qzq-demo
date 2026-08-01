@@ -1,41 +1,25 @@
 <template>
   <div class="cnc-log-container">
-    <div class="search-container">
-      <h1>相关代码</h1>
-      <el-input
-        v-model="searchText"
-        placeholder="搜索标题，如 G代码、M代码、程序示例..."
-        clearable
-        style="width: 400px"
-        @keyup.enter="handleSearch"
-        @input="handleInput"
-      >
-        <template #prefix>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-        </template>
-      </el-input>
-      <el-button type="primary" @click="handleSearch">搜索</el-button>
+    <PageHeader>
+      <template #actions>
+        <el-input v-model="searchText" placeholder="搜索标题，如 G代码、M代码、程序示例..." clearable @keyup.enter="handleSearch" @input="handleInput">
+          <template #prefix>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </template>
+        </el-input>
+        <el-button type="primary" @click="handleSearch">搜索</el-button>
 
-      <div v-if="showDropdown && searchResults.length > 0" class="search-dropdown">
-        <div class="dropdown-header">找到 {{ searchResults.length }} 个结果：</div>
-        <div v-for="(result, index) in searchResults" :key="index" class="dropdown-item" @click="scrollToTarget(result.id)">
-          {{ result.title }}
+        <div v-if="showDropdown && searchResults.length > 0" class="search-dropdown">
+          <div class="dropdown-header">找到 {{ searchResults.length }} 个结果：</div>
+          <div v-for="(result, index) in searchResults" :key="index" class="dropdown-item" @click="scrollToTarget(result.id)">
+            {{ result.title }}
+          </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </PageHeader>
 
     <div v-for="section in sections" :id="section.id" :key="section.id" class="code-block">
       <h3><span class="anchor">#</span> {{ section.title }}</h3>
@@ -46,6 +30,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import PageHeader from '../components/PageHeader.vue'
 import { sections } from './data.js'
 const searchText = ref('')
 const showDropdown = ref(false)
@@ -89,43 +74,16 @@ const scrollToTarget = (id) => {
 <style scoped>
 .cnc-log-container {
   padding: 20px;
-}
-.search-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-  gap: 20px;
-  position: relative;
-  h1 {
-    font-size: 24px;
-    font-weight: bold;
-  }
-}
-
-.page-title {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #667eea;
-}
-
-.search-box {
-  position: relative;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100vh;
 }
 
 .search-dropdown {
   position: absolute;
-  top: 100%;
-  left: 7%;
-  width: 400px;
+  top: calc(100% + 8px);
+  right: 80px;
+  width: 360px;
   background: #fff;
   border: 1px solid #e4e7ed;
   border-radius: 8px;

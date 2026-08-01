@@ -1,13 +1,6 @@
 <template>
   <div class="cutting-params">
-    <div class="page-header">
-      <div class="header-content">
-        <div class="header-text">
-          <h1>CNC加工参数参考</h1>
-          <p>提供常见材料切削参数、刀具选择指南、主轴转速及进给量参考，适用于UG加工模块</p>
-        </div>
-      </div>
-    </div>
+    <PageHeader />
 
     <el-tabs v-model="activeTab" type="card" class="tabs-container">
       <el-tab-pane label="常见材料切削参数" name="material">
@@ -52,7 +45,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { Cpu } from '@element-plus/icons-vue'
+import PageHeader from '../components/PageHeader.vue'
 import MaterialCuttingParams from './components/material-cutting-params/index.vue'
 import ToolSelectionGuide from './components/tool-selection-guide/index.vue'
 import SpindleSpeedReference from './components/spindle-speed-reference/index.vue'
@@ -75,44 +68,6 @@ const activeTab = ref('material')
   width: 100%;
   box-sizing: border-box;
   min-height: 100vh;
-
-  .page-header {
-    margin-bottom: 24px;
-    padding: 24px 28px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6b8dd6 100%);
-    border-radius: 16px;
-    color: #fff;
-    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .header-text {
-      h1 {
-        font-size: 26px;
-        margin: 0 0 10px 0;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        .header-icon {
-          font-size: 24px;
-        }
-      }
-
-      p {
-        font-size: 14px;
-        margin: 0;
-        opacity: 0.9;
-        line-height: 1.6;
-      }
-    }
-  }
 
   .tabs-container {
     background: #fff;

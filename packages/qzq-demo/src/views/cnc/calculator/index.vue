@@ -1,9 +1,6 @@
 <template>
   <div class="calculator-container">
-    <div class="page-header">
-      <h1>计算器</h1>
-      <p>简单的 CNC 材料重量计算工具，方便计算</p>
-    </div>
+    <PageHeader />
     <el-tabs v-model="activeTab" type="card" class="calculator-tabs">
       <el-tab-pane label="材料重量" name="weight">
         <MaterialWeightCalculator />
@@ -20,6 +17,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import PageHeader from '../components/PageHeader.vue'
 import MaterialWeightCalculator from './components/MaterialWeightCalculator/index.vue'
 import LaborCostCalculator from './components/LaborCostCalculator/index.vue'
 import BallnoseStepHeightCalculator from './components/BallnoseStepHeightCalculator/index.vue'
@@ -30,27 +28,55 @@ const activeTab = ref('weight')
 <style lang="scss" scoped>
 .calculator-container {
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100vh;
 }
 .calculator-tabs {
   margin: 0 auto;
-}
-.page-header {
-  margin-bottom: 20px;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #fff;
   border-radius: 12px;
-  color: #fff;
+  padding: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 
-  h1 {
-    font-size: 24px;
-    margin: 0 0 8px 0;
-    font-weight: bold;
+  :deep(.el-tabs__header) {
+    margin-bottom: 16px;
+    background: #f8f9fb;
+    border-radius: 8px;
+    padding: 6px;
   }
 
-  p {
+  :deep(.el-tabs__nav-wrap::after) {
+    display: none;
+  }
+
+  :deep(.el-tabs__item) {
+    padding: 0 20px;
     font-size: 14px;
-    margin: 0;
-    opacity: 0.9;
+    font-weight: 500;
+    border-radius: 6px;
+    height: 36px;
+    line-height: 36px;
+    transition: all 0.3s ease;
+    border: none;
+
+    &:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+  }
+
+  :deep(.el-tabs__item.is-active) {
+    color: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  }
+
+  :deep(.el-tabs__active-bar) {
+    display: none;
+  }
+
+  :deep(.el-tabs__content) {
+    padding: 16px 8px;
   }
 }
 </style>

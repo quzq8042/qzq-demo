@@ -3,5 +3,5 @@ module.exports = {
   singleQuote: true, // 使用单引号
   endOfLine: 'lf', //换行符使用 lf 结尾
   tabWidth: 2, // 设置tab宽带为2个空格
-  printWidth: 140, // 一行最多140个字符
+  printWidth: 500, // 一行最多140个字符
 }

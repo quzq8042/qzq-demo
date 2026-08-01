@@ -12,17 +12,7 @@
 
           <div class="feature-carousel" @mouseenter="showArrows = true" @mouseleave="showArrows = false">
             <button class="carousel-arrow carousel-prev" :class="{ visible: showArrows }" @click.stop="prevFeature">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
             </button>
@@ -30,33 +20,16 @@
               <div v-for="(item, index) in features" :key="index" class="feature-card">
                 <div class="feature-icon">{{ item.icon }}</div>
                 <div class="feature-name">{{ item.title }}</div>
-                <div class="feature-desc">{{ item.description }}</div>
-                <div class="feature-highlight">{{ item.highlight }}</div>
+                <div class="feature-highlight">{{ item.description }}</div>
               </div>
             </div>
             <button class="carousel-arrow carousel-next" :class="{ visible: showArrows }" @click.stop="nextFeature">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </button>
             <div class="carousel-dots">
-              <button
-                v-for="(_, index) in features"
-                :key="index"
-                class="dot"
-                :class="{ active: currentFeatureIndex === index }"
-                @click="goToFeature(index)"
-              ></button>
+              <button v-for="(_, index) in features" :key="index" class="dot" :class="{ active: currentFeatureIndex === index }" @click="goToFeature(index)"></button>
             </div>
           </div>
 
@@ -72,10 +45,7 @@
       <div class="about-container">
         <div class="about-text">
           <h2 class="section-title">什么是 CNC 数控加工助手？</h2>
-          <p class="about-description">
-            CNC 数控加工助手是一款专为 CNC
-            编程人员打造的专业工具集合。我们深知数控加工行业的痛点，致力于提供高效、便捷、专业的解决方案，帮助工程师和技术员提升工作效率，降低出错率。
-          </p>
+          <p class="about-description">CNC 数控加工助手是一款专为 CNC 编程人员打造的专业工具集合。我们深知数控加工行业的痛点，致力于提供高效、便捷、专业的解决方案，帮助工程师和技术员提升工作效率，降低出错率。</p>
           <div class="about-features">
             <div class="about-feature-item">
               <span class="about-feature-icon">✅</span>
@@ -109,13 +79,7 @@
       <h2 class="section-title">功能模块</h2>
       <p class="section-subtitle">探索我们的核心功能，提升您的工作效率</p>
       <div class="features-grid">
-        <div
-          v-for="(feature, index) in features"
-          :key="feature.name"
-          class="feature-card"
-          :class="{ 'delay-1': index === 1, 'delay-2': index === 2 }"
-          @click="navigateTo(feature.path)"
-        >
+        <div v-for="(feature, index) in features" :key="feature.name" class="feature-card" :class="{ 'delay-1': index === 1, 'delay-2': index === 2 }" @click="navigateTo(feature.path)">
           <div class="feature-icon-wrapper">
             <span class="feature-icon">{{ feature.icon }}</span>
           </div>
@@ -125,17 +89,7 @@
             <span v-for="tag in feature.tags" :key="tag" class="feature-tag">{{ tag }}</span>
           </div>
           <div class="feature-arrow">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </div>
@@ -212,7 +166,7 @@ X50.</code></pre>
       <h2 class="section-title">常见问题</h2>
       <p class="section-subtitle">解答您的疑惑</p>
       <div class="faq-list">
-        <div v-for="(faq, index) in faqs" :key="index" class="faq-item" :class="{ active: activeFaq === index }" @click="toggleFaq(index)">
+        <div v-for="(faq, index) in beginnerFaqs.slice(0, 5)" :key="index" class="faq-item" :class="{ active: activeFaq === index }" @click="toggleFaq(index)">
           <div class="faq-header">
             <span class="faq-icon">❓</span>
             <span class="faq-question">{{ faq.question }}</span>
@@ -246,6 +200,8 @@ X50.</code></pre>
 </template>
 
 <script setup>
+import { constantRoutes } from '@/router'
+
 const router = useRouter()
 const activeFaq = ref(0)
 const currentFeatureIndex = ref(0)
@@ -286,62 +242,29 @@ onUnmounted(() => {
   stopCarousel()
 })
 
-const features = [
-  {
-    name: 'cad-shortcut-key',
-    icon: '⌨️',
-    title: '快捷命令搜索',
-    description: '收录常用的 CAD 和 UG 快捷命令，支持搜索、导出 Markdown 和 Excel 格式',
-    tags: ['CAD', 'UG', '快捷键'],
-    path: '/cnc/cad-shortcut-key',
-    highlight: '支持搜索、导出 Markdown 和 Excel 格式',
-  },
-  {
-    name: 'cnc-code',
-    icon: '📝',
-    title: 'CNC代码',
-    description: '提供丰富的 CNC 加工代码示例，包含刀具信息、操作面板等参考资料',
-    tags: ['G代码', 'M代码', '刀具'],
-    path: '/cnc/cnc-code',
-    highlight: '包含刀具信息、操作面板等参考资料',
-  },
-  {
-    name: 'cnc-log',
-    icon: '📋',
-    title: '相关代码',
-    description: '记录和管理您的 CNC 编程代码，方便查阅和复用',
-    tags: ['记录', '管理', '代码'],
-    path: '/cnc/cnc-log',
-    highlight: '方便查阅和复用，提升工作效率',
-  },
-  {
-    name: 'calculator',
-    icon: '🧮',
-    title: '计算器',
-    description: '简单的 CNC 材料重量计算工具，方便计算',
-    tags: ['计算', '工具'],
-    path: '/cnc/calculator',
-    highlight: '方便计算，提升工作效率',
-  },
-  {
-    name: 'cnc-cutting-params',
-    icon: '🔍',
-    title: 'CNC加工参数参考',
-    description: '提供常见材料切削参数、刀具选择指南、主轴转速及进给量参考，适用于UG加工模块',
-    tags: ['CNC', '加工', '参数', '参考'],
-    path: '/cnc/cutting-params',
-    highlight: '提供常见材料切削参数、刀具选择指南、主轴转速及进给量参考',
-  },
-  {
-    name: 'ug-machining-strategy',
-    icon: '🛠️',
-    title: 'UG加工',
-    description: 'UG加工模块的加工类型参考，包括平面铣削、带边界面铣、平面铣等多种类型',
-    tags: ['UG', '加工', '参数', '参考'],
-    path: '/cnc/ug-machining-strategy',
-    highlight: 'mill_planar、mill_contour、hole_making、turning等多种类型',
-  },
-]
+const iconMap = {
+  EditPen: '⌨️',
+  Document: '📄',
+  Tickets: '🧾',
+  Operation: '🧮',
+  Cpu: '⚙️',
+  Tools: '🔧',
+  QuestionFilled: '❓',
+  Dashboard: '📊',
+}
+
+const features =
+  constantRoutes
+    .flatMap((route) => route.children || [])
+    .find((route) => route.path === '/cnc')
+    ?.children.filter((child) => !child.hidden)
+    .map((child) => ({
+      path: child.path,
+      icon: iconMap[child.meta?.icon] || '📦',
+      title: child.meta?.title || child.name,
+      description: child.meta?.description || '',
+      tags: child.meta?.tags || [],
+    })) || []
 
 const workflowSteps = [
   {
@@ -366,24 +289,7 @@ const workflowSteps = [
   },
 ]
 
-const faqs = [
-  {
-    question: '这个工具是免费的吗？',
-    answer: '是的，CNC数控加工助手完全免费使用，没有任何隐藏收费或广告。致力于为CNC编程人员提供免费、专业的工具支持。',
-  },
-  {
-    question: '支持哪些软件的快捷键？',
-    answer: '目前支持AutoCAD、UG/NX、等主流CAD/CAM软件的快捷键查询，后续还会不断扩展支持更多软件。',
-  },
-  {
-    question: '代码记录数据会被保存吗？',
-    answer: '代码记录数据保存在您的本地浏览器中，不会上传到服务器，确保您的数据安全和隐私。',
-  },
-  {
-    question: '如何获取最新更新？',
-    answer: '会定期更新工具内容，包括新增快捷键、代码示例等。刷新页面即可获取最新版本，无需手动更新。',
-  },
-]
+import { beginnerFaqs } from '@/views/cnc/faq/data.js'
 
 const navigateTo = (path) => {
   router.push(path)

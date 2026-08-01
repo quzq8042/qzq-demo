@@ -1,12 +1,13 @@
 <template>
   <div class="cad-shortcut-key">
-    <div class="search-container">
-      <h1>UG 快捷命令</h1>
-      <el-input v-model="searchText" placeholder="搜索命令" clearable style="width: 300px" />
-      <el-button type="primary" @click="resetSearch">重置</el-button>
-      <el-button type="success" icon="Download" @click="exportMarkdown">导出 Markdown</el-button>
-      <el-button type="warning" icon="Download" @click="exportExcel">导出 Excel</el-button>
-    </div>
+    <PageHeader>
+      <template #actions>
+        <el-input v-model="searchText" placeholder="搜索命令" clearable />
+        <el-button type="primary" @click="resetSearch">重置</el-button>
+        <el-button type="success" icon="Download" @click="exportMarkdown">导出 Markdown</el-button>
+        <el-button type="warning" icon="Download" @click="exportExcel">导出 Excel</el-button>
+      </template>
+    </PageHeader>
 
     <!-- 全局搜索结果 -->
     <div v-if="debouncedKeyword && globalSearchResults.length" class="search-result">
@@ -26,7 +27,7 @@
     </div>
 
     <!-- 原始标签页 -->
-    <el-tabs v-else v-model="activeTab" type="card">
+    <el-tabs v-else v-model="activeTab" type="card" class="tabs-container">
       <el-tab-pane v-for="tab in tabs" :key="tab.name" :label="tab.label" :name="tab.name">
         <el-table :data="tab.data" border style="width: 100%">
           <el-table-column v-for="col in tab.columns" :key="col.prop" v-bind="col" />
@@ -38,6 +39,7 @@
 
 <script setup>
 import { tabs } from './data'
+import PageHeader from '../components/PageHeader.vue'
 import * as XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
 
@@ -146,20 +148,64 @@ const exportExcel = () => {
 <style lang="scss" scoped>
 .cad-shortcut-key {
   padding: 20px;
-  .search-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-    gap: 20px;
-    h1 {
-      font-size: 24px;
-      font-weight: bold;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100vh;
+
+  .tabs-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+
+    :deep(.el-tabs__header) {
+      margin-bottom: 16px;
+      background: #f8f9fb;
+      border-radius: 8px;
+      padding: 6px;
+    }
+
+    :deep(.el-tabs__nav-wrap::after) {
+      display: none;
+    }
+
+    :deep(.el-tabs__item) {
+      padding: 0 20px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 6px;
+      height: 36px;
+      line-height: 36px;
+      transition: all 0.3s ease;
+      border: none;
+
+      &:hover {
+        background: rgba(102, 126, 234, 0.1);
+      }
+    }
+
+    :deep(.el-tabs__item.is-active) {
+      color: #fff;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    :deep(.el-tabs__active-bar) {
+      display: none;
+    }
+
+    :deep(.el-tabs__content) {
+      padding: 16px 8px;
     }
   }
+
   .search-result {
     margin-bottom: 20px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+
     h3 {
       font-size: 16px;
       font-weight: 600;

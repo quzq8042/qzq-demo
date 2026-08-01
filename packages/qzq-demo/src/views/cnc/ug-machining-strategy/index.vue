@@ -1,9 +1,6 @@
 <template>
   <div class="tab-content">
-    <div class="page-header">
-      <h1>UG加工</h1>
-      <p>UG加工模块的加工类型参考，包括平面铣削、带边界面铣、平面铣等多种类型</p>
-    </div>
+    <PageHeader />
     <div class="strategy-categories">
       <div v-for="category in strategyCategories" :key="category.name" class="category-card">
         <div class="category-header">
@@ -18,12 +15,7 @@
           <span>{{ category.tips }}</span>
         </div>
         <div class="feature-list">
-          <div
-            v-for="(feature, index) in category.features"
-            :key="index"
-            class="feature-item"
-            @click="goToDetail(category.name, feature.name)"
-          >
+          <div v-for="(feature, index) in category.features" :key="index" class="feature-item" @click="goToDetail(category.name, feature.name)">
             <span class="feature-icon"><img :src="feature.icon" alt="feature-icon" /></span>
             <div class="feature-content">
               <span class="feature-name">{{ feature.name }}</span>
@@ -39,6 +31,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import PageHeader from '../components/PageHeader.vue'
 import { strategyCategories } from './data/index.js'
 
 const router = useRouter()
@@ -56,25 +49,6 @@ const goToDetail = (category, feature) => {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   width: 100%;
   box-sizing: border-box;
-}
-.page-header {
-  margin-bottom: 20px;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
-  color: #fff;
-
-  h1 {
-    font-size: 24px;
-    margin: 0 0 8px 0;
-    font-weight: bold;
-  }
-
-  p {
-    font-size: 14px;
-    margin: 0;
-    opacity: 0.9;
-  }
 }
 .strategy-categories {
   display: grid;
