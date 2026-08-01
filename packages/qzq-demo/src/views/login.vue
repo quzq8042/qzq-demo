@@ -11,6 +11,7 @@
           size="large"
           auto-complete="off"
           placeholder="账号"
+          @keyup.enter="handleLogin"
           @focus="handleUsernameFocus"
           @blur="handleUsernameBlur"
         >

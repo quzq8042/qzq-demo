@@ -138,7 +138,7 @@ const goToDetail = (category, feature) => {
 
 .feature-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   padding: 12px;
   background: #fff;
