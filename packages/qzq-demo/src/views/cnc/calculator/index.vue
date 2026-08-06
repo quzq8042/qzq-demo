@@ -8,8 +8,17 @@
       <el-tab-pane label="工时报价" name="labor">
         <LaborCostCalculator />
       </el-tab-pane>
-      <el-tab-pane label="球刀加工步距与残余高度之间的换算" name="ballnose">
+      <el-tab-pane label="球刀步距换算" name="ballnose">
         <BallnoseStepHeightCalculator />
+      </el-tab-pane>
+      <el-tab-pane label="切削力/功率" name="cutting">
+        <CuttingForceCalculator />
+      </el-tab-pane>
+      <el-tab-pane label="单位换算" name="unit">
+        <UnitConverter />
+      </el-tab-pane>
+      <el-tab-pane label="螺纹加工" name="thread">
+        <ThreadCalculator />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -21,6 +30,9 @@ import PageHeader from '../components/PageHeader.vue'
 import MaterialWeightCalculator from './components/MaterialWeightCalculator/index.vue'
 import LaborCostCalculator from './components/LaborCostCalculator/index.vue'
 import BallnoseStepHeightCalculator from './components/BallnoseStepHeightCalculator/index.vue'
+import CuttingForceCalculator from './components/CuttingForceCalculator/index.vue'
+import UnitConverter from './components/UnitConverter/index.vue'
+import ThreadCalculator from './components/ThreadCalculator/index.vue'
 
 const activeTab = ref('weight')
 </script>

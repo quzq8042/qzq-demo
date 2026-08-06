@@ -34,7 +34,7 @@
           </div>
 
           <div class="hero-actions">
-            <button class="action-btn primary" @click="navigateTo('/cnc/cad-shortcut-key')">开始使用</button>
+            <button class="action-btn primary" @click="navigateTo('/cnc')">开始使用</button>
           </div>
         </div>
       </div>
@@ -182,7 +182,7 @@ X50.</code></pre>
       <div class="cta-content">
         <h2 class="cta-title">准备好提升效率了吗？</h2>
         <div class="cta-actions">
-          <button class="cta-btn primary" @click="navigateTo('/cnc/cad-shortcut-key')">立即开始</button>
+          <button class="cta-btn primary" @click="navigateTo('/cnc')">立即开始</button>
         </div>
       </div>
     </div>
