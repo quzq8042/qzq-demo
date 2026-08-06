@@ -47,7 +47,7 @@ export const constantRoutes = [
         path: '/cnc',
         component: ViewLayout,
         name: 'cnc',
-        redirect: '/cnc/cutting-params',
+        redirect: '/cnc/cad-shortcut-key',
         meta: { title: 'CNC数控', icon: 'dashboard', affix: true },
         children: [
           {
