@@ -12,12 +12,16 @@
     </div>
     <div class="header-right">
       <time-picker class="time-picker"></time-picker>
-      <el-button type="primary" @click="handleLogout">退出登录</el-button>
+      <el-button class="logout-btn" text @click="handleLogout">
+        <el-icon class="logout-icon"><SwitchButton /></el-icon>
+        <span>退出登录</span>
+      </el-button>
     </div>
   </header>
 </template>
 
 <script setup>
+import { SwitchButton } from '@element-plus/icons-vue'
 import TimePicker from '@/components/TimePicker/index.vue'
 import useUserStore from '@/store/modules/user'
 import { getToken } from '@/utils/auth'
@@ -53,9 +57,12 @@ const navRoutes = computed(() => {
 })
 import { ElMessage, ElMessageBox } from 'element-plus'
 const handleLogout = () => {
-  ElMessageBox.confirm('是否确认退出登录?', '提示', {
-    confirmButtonText: '确认',
+  ElMessageBox.confirm('<div class="logout-dialog-content"><div class="logout-icon-circle">🚪</div><p class="logout-text">您确定要退出当前登录吗？</p><p class="logout-subtext">退出后需要重新登录才能使用系统</p></div>', '退出登录', {
+    confirmButtonText: '确认退出',
     cancelButtonText: '取消',
+    customClass: 'custom-message-box custom-logout-box',
+    dangerouslyUseHTMLString: true,
+    center: true,
     type: 'warning',
   })
     .then(() => {
@@ -131,5 +138,38 @@ const handleLogoClick = () => {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+/* 退出登录按钮美化 */
+.logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+
+  .logout-icon {
+    font-size: 16px;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.28) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 </style>

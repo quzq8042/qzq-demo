@@ -41,138 +41,596 @@
       width: 100%;
       height: 100%;
       z-index: 999999;
+      background: linear-gradient(135deg, #e0ecff 0%, #c7d9f5 30%, #a3bfe8 60%, #7b9dd4 100%);
+      overflow: hidden;
     }
 
-    #loader {
-      display: block;
-      position: relative;
-      left: 50%;
-      top: 50%;
-      width: 150px;
-      height: 150px;
-      margin: -75px 0 0 -75px;
+    /* 漂浮的云朵装饰 */
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.7);
       border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: #fff;
-      -webkit-animation: spin 2s linear infinite;
-      -ms-animation: spin 2s linear infinite;
-      -moz-animation: spin 2s linear infinite;
-      -o-animation: spin 2s linear infinite;
-      animation: spin 2s linear infinite;
-      z-index: 1001;
+      animation: floatCloud 20s linear infinite;
     }
 
-    #loader:before {
+    .cloud::before,
+    .cloud::after {
       content: '';
       position: absolute;
-      top: 5px;
-      left: 5px;
-      right: 5px;
-      bottom: 5px;
+      background: rgba(255, 255, 255, 0.7);
       border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: #fff;
-      -webkit-animation: spin 3s linear infinite;
-      -moz-animation: spin 3s linear infinite;
-      -o-animation: spin 3s linear infinite;
-      -ms-animation: spin 3s linear infinite;
-      animation: spin 3s linear infinite;
     }
 
-    #loader:after {
-      content: '';
-      position: absolute;
-      top: 15px;
+    .cloud1 {
+      width: 80px;
+      height: 40px;
+      top: 10%;
+      left: -10%;
+      animation-duration: 25s;
+    }
+
+    .cloud1::before {
+      width: 50px;
+      height: 50px;
+      top: -25px;
+      left: 10px;
+    }
+
+    .cloud1::after {
+      width: 40px;
+      height: 40px;
+      top: -15px;
+      left: 35px;
+    }
+
+    .cloud2 {
+      width: 60px;
+      height: 30px;
+      top: 25%;
+      left: -15%;
+      animation-duration: 30s;
+      animation-delay: -10s;
+    }
+
+    .cloud2::before {
+      width: 35px;
+      height: 35px;
+      top: -18px;
+      left: 8px;
+    }
+
+    .cloud2::after {
+      width: 30px;
+      height: 30px;
+      top: -10px;
+      left: 28px;
+    }
+
+    .cloud3 {
+      width: 100px;
+      height: 50px;
+      top: 70%;
+      left: -5%;
+      animation-duration: 22s;
+      animation-delay: -5s;
+    }
+
+    .cloud3::before {
+      width: 60px;
+      height: 60px;
+      top: -30px;
       left: 15px;
-      right: 15px;
-      bottom: 15px;
+    }
+
+    .cloud3::after {
+      width: 50px;
+      height: 50px;
+      top: -20px;
+      left: 45px;
+    }
+
+    @keyframes floatCloud {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(120vw);
+      }
+    }
+
+    /* 小星星装饰 */
+    .star {
+      position: absolute;
+      font-size: 24px;
+      animation: twinkle 2s ease-in-out infinite;
+    }
+
+    .star1 {
+      top: 15%;
+      left: 20%;
+      animation-delay: 0s;
+    }
+
+    .star2 {
+      top: 20%;
+      right: 15%;
+      animation-delay: 0.5s;
+      font-size: 18px;
+    }
+
+    .star3 {
+      bottom: 25%;
+      left: 10%;
+      animation-delay: 1s;
+      font-size: 20px;
+    }
+
+    .star4 {
+      bottom: 15%;
+      right: 20%;
+      animation-delay: 1.5s;
+      font-size: 22px;
+    }
+
+    .star5 {
+      top: 50%;
+      left: 5%;
+      animation-delay: 0.8s;
+      font-size: 16px;
+    }
+
+    .star6 {
+      top: 60%;
+      right: 8%;
+      animation-delay: 1.3s;
+      font-size: 28px;
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.3) rotate(180deg);
+        opacity: 0.7;
+      }
+    }
+
+    /* 卡通加载容器 */
+    .cartoon-loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    /* 可爱的加载小动物 */
+    .mascot {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 30px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    /* 卡通猫咪/小动物身体 */
+    .mascot-body {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(145deg, #66b1ff, #409eff);
       border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: #fff;
-      -moz-animation: spin 1.5s linear infinite;
-      -o-animation: spin 1.5s linear infinite;
-      -ms-animation: spin 1.5s linear infinite;
-      -webkit-animation: spin 1.5s linear infinite;
-      animation: spin 1.5s linear infinite;
+      left: 50%;
+      top: 30px;
+      transform: translateX(-50%);
+      box-shadow:
+        inset -8px -8px 20px rgba(0, 0, 0, 0.1),
+        0 10px 30px rgba(64, 158, 255, 0.4),
+        0 15px 40px rgba(0, 0, 0, 0.1);
+      animation: wiggle 3s ease-in-out infinite;
     }
 
-    @-webkit-keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-      }
+    @keyframes wiggle {
 
+      0%,
       100% {
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
+        border-radius: 50%;
+      }
+
+      25% {
+        border-radius: 48% 52% 50% 50%;
+      }
+
+      75% {
+        border-radius: 52% 48% 50% 50%;
       }
     }
 
-    @keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-      }
-
-      100% {
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
-      }
-    }
-
-    #loader-wrapper .loader-section {
-      position: fixed;
+    /* 耳朵 */
+    .ear {
+      position: absolute;
+      width: 40px;
+      height: 50px;
+      background: linear-gradient(145deg, #66b1ff, #409eff);
       top: 0;
-      width: 51%;
+      z-index: 2;
+    }
+
+    .ear-left {
+      left: 20px;
+      border-radius: 50% 50% 0 0;
+      transform: rotate(-20deg);
+      box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .ear-right {
+      right: 20px;
+      border-radius: 50% 50% 0 0;
+      transform: rotate(20deg);
+      box-shadow: inset 4px -4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 内耳 */
+    .ear-inner {
+      position: absolute;
+      width: 20px;
+      height: 28px;
+      background: #a0cfff;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 50% 50% 0 0;
+    }
+
+    /* 眼睛 */
+    .yan {
+      position: absolute;
+      width: 24px;
+      height: 28px;
+      background: #2d3436;
+      border-radius: 50%;
+      top: 70px;
+      z-index: 3;
+      animation: blink 4s infinite;
+    }
+
+    .yan-left {
+      left: 38px;
+    }
+
+    .yan-right {
+      right: 38px;
+    }
+
+    .yan::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      top: 4px;
+      left: 4px;
+    }
+
+    @keyframes blink {
+
+      0%,
+      45%,
+      55%,
+      100% {
+        transform: scaleY(1);
+      }
+
+      50% {
+        transform: scaleY(0.1);
+      }
+    }
+
+    /* 腮红 */
+    .cheek {
+      position: absolute;
+      width: 20px;
+      height: 12px;
+      background: #ff9999;
+      border-radius: 50%;
+      top: 95px;
+      z-index: 2;
+      opacity: 0.6;
+      filter: blur(2px);
+    }
+
+    .cheek-left {
+      left: 28px;
+    }
+
+    .cheek-right {
+      right: 28px;
+    }
+
+    /* 嘴巴 */
+    .mouth {
+      position: absolute;
+      width: 30px;
+      height: 15px;
+      border: 3px solid #2d3436;
+      border-top: none;
+      border-radius: 0 0 30px 30px;
+      top: 95px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+    }
+
+    /* 身体下面的阴影 */
+    .mascot-shadow {
+      position: absolute;
+      width: 100px;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 50%;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      filter: blur(5px);
+      animation: shadowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes shadowPulse {
+
+      0%,
+      100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 0.3;
+      }
+
+      50% {
+        transform: translateX(-50%) scale(0.7);
+        opacity: 0.2;
+      }
+    }
+
+    /* 加载进度条 */
+    .progress-container {
+      width: 280px;
+      margin: 0 auto 20px;
+      position: relative;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 16px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, 0.1),
+        0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .progress-fill {
       height: 100%;
-      background: #7171c6;
-      z-index: 1000;
-      -webkit-transform: translateX(0);
-      -ms-transform: translateX(0);
-      transform: translateX(0);
+      background: linear-gradient(90deg, #409eff, #36cfc9, #67c23a, #409eff);
+      background-size: 300% 100%;
+      border-radius: 20px;
+      animation: progressFill 2s ease-in-out infinite, gradientMove 3s linear infinite;
+      box-shadow: 0 0 20px rgba(64, 158, 255, 0.5);
     }
 
-    #loader-wrapper .loader-section.section-left {
+    @keyframes progressFill {
+      0% {
+        width: 10%;
+      }
+
+      50% {
+        width: 85%;
+      }
+
+      100% {
+        width: 10%;
+      }
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      100% {
+        background-position: 300% 50%;
+      }
+    }
+
+    /* 进度条上的小彩球 */
+    .progress-ball {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: radial-gradient(circle at 30% 30%, #fff, #409eff);
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
       left: 0;
+      animation: ballMove 2s ease-in-out infinite;
+      box-shadow: 0 4px 10px rgba(64, 158, 255, 0.5);
     }
 
-    #loader-wrapper .loader-section.section-right {
-      right: 0;
+    @keyframes ballMove {
+      0% {
+        left: 0%;
+      }
+
+      50% {
+        left: calc(100% - 24px);
+      }
+
+      100% {
+        left: 0%;
+      }
     }
 
-    .loaded #loader-wrapper .loader-section.section-left {
-      -webkit-transform: translateX(-100%);
-      -ms-transform: translateX(-100%);
-      transform: translateX(-100%);
-      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    /* 加载文字 */
+    .load-title {
+      font-family: 'Microsoft YaHei', sans-serif;
+      font-size: 22px;
+      color: #fff;
+      font-weight: bold;
+      text-shadow:
+        2px 2px 0 rgba(64, 158, 255, 0.6),
+        4px 4px 10px rgba(0, 0, 0, 0.15);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      animation: titlePulse 1.5s ease-in-out infinite;
     }
 
-    .loaded #loader-wrapper .loader-section.section-right {
-      -webkit-transform: translateX(100%);
-      -ms-transform: translateX(100%);
-      transform: translateX(100%);
-      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    @keyframes titlePulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
     }
 
-    .loaded #loader {
-      opacity: 0;
-      -webkit-transition: all 0.3s ease-out;
-      transition: all 0.3s ease-out;
+    .load-subtitle {
+      font-family: 'Microsoft YaHei', sans-serif;
+      font-size: 14px;
+      color: #fff;
+      opacity: 0.9;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     }
 
+    /* 跳动的小点点 */
+    .dots span {
+      display: inline-block;
+      animation: dotBounce 1.4s infinite ease-in-out both;
+      margin: 0 2px;
+    }
+
+    .dots span:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    .dots span:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+
+    @keyframes dotBounce {
+
+      0%,
+      80%,
+      100% {
+        transform: scale(0);
+      }
+
+      40% {
+        transform: scale(1);
+      }
+    }
+
+    /* 加载完成的动画 */
     .loaded #loader-wrapper {
-      visibility: hidden;
-      -webkit-transform: translateY(-100%);
-      -ms-transform: translateY(-100%);
-      transform: translateY(-100%);
-      -webkit-transition: all 0.3s 1s ease-out;
-      transition: all 0.3s 1s ease-out;
+      animation: fadeOut 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    /* 飘落的装饰元素 */
+    .deco-circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: fall 10s linear infinite;
+    }
+
+    .deco-circle.c1 {
+      width: 20px;
+      height: 20px;
+      background: #66b1ff;
+      top: -10%;
+      left: 10%;
+      animation-duration: 8s;
+    }
+
+    .deco-circle.c2 {
+      width: 15px;
+      height: 15px;
+      background: #36cfc9;
+      top: -10%;
+      left: 30%;
+      animation-duration: 12s;
+      animation-delay: -2s;
+    }
+
+    .deco-circle.c3 {
+      width: 25px;
+      height: 25px;
+      background: #409eff;
+      top: -10%;
+      left: 50%;
+      animation-duration: 9s;
+      animation-delay: -4s;
+    }
+
+    .deco-circle.c4 {
+      width: 12px;
+      height: 12px;
+      background: #67c23a;
+      top: -10%;
+      left: 70%;
+      animation-duration: 11s;
+      animation-delay: -1s;
+    }
+
+    .deco-circle.c5 {
+      width: 18px;
+      height: 18px;
+      background: #7bb8ff;
+      top: -10%;
+      left: 90%;
+      animation-duration: 7s;
+      animation-delay: -3s;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+      }
+
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
     }
 
     .no-js #loader-wrapper {
@@ -182,27 +640,6 @@
     .no-js h1 {
       color: #222222;
     }
-
-    #loader-wrapper .load_title {
-      font-family: Microsoft YaHei;
-      color: #fff;
-      font-size: 19px;
-      width: 100%;
-      text-align: center;
-      z-index: 9999999999999;
-      position: absolute;
-      top: 60%;
-      opacity: 1;
-      line-height: 30px;
-    }
-
-    #loader-wrapper .load_title span {
-      font-weight: normal;
-      font-style: italic;
-      font-size: 13px;
-      color: #fff;
-      opacity: 0.5;
-    }
   </style>
 
 </head>
@@ -210,10 +647,52 @@
 <body>
   <div id="app">
     <div id="loader-wrapper">
-      <div id="loader"></div>
-      <div class="loader-section section-left"></div>
-      <div class="loader-section section-right"></div>
-      <div class="load_title">正在加载系统资源，请耐心等待</div>
+      <div class="cloud cloud1"></div>
+      <div class="cloud cloud2"></div>
+      <div class="cloud cloud3"></div>
+
+      <div class="star star1">⭐</div>
+      <div class="star star2">✨</div>
+      <div class="star star3">🌟</div>
+      <div class="star star4">✨</div>
+      <div class="star star5">⭐</div>
+      <div class="star star6">🌟</div>
+
+      <div class="deco-circle c1"></div>
+      <div class="deco-circle c2"></div>
+      <div class="deco-circle c3"></div>
+      <div class="deco-circle c4"></div>
+      <div class="deco-circle c5"></div>
+
+      <div class="cartoon-loader">
+        <div class="mascot">
+          <div class="ear ear-left">
+            <div class="ear-inner"></div>
+          </div>
+          <div class="ear ear-right">
+            <div class="ear-inner"></div>
+          </div>
+          <div class="mascot-body"></div>
+          <div class="yan yan-left"></div>
+          <div class="yan yan-right"></div>
+          <div class="cheek cheek-left"></div>
+          <div class="cheek cheek-right"></div>
+          <div class="mouth"></div>
+          <div class="mascot-shadow"></div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="progress-ball"></div>
+        </div>
+
+        <div class="load-title">正在加载系统资源</div>
+        <div class="load-subtitle">
+          请耐心等待<span class="dots"><span>.</span><span>.</span></span>
+        </div>
+      </div>
     </div>
   </div>
   <script type="module" src="/src/main.js"></script>
