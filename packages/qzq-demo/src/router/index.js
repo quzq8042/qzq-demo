@@ -138,6 +138,18 @@ export const constantRoutes = [
             hidden: true,
           },
           {
+            path: '/cnc/special-tool-creation',
+            component: () => import('@/views/cnc/special-tool-creation/index'),
+            name: 'SpecialToolCreation',
+            meta: {
+              title: '特殊刀具创建',
+              icon: 'QuestionFilled',
+              description: '特殊刀具创建指南，助您快速掌握 CNC 加工技能',
+              requireQz: true,
+              tags: ['特殊刀具创建'],
+            },
+          },
+          {
             path: '/cnc/faq',
             component: () => import('@/views/cnc/faq/index'),
             name: 'Faq',
