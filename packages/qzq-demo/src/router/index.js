@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter, createWebHashHistory } from 'vue-router'
+import { nextTick } from 'vue'
 
 import Layout from '@/layout'
 import ViewLayout from '@/views/layout/index.vue'
@@ -282,7 +283,15 @@ const router = createRouter({
     if (savedPosition) {
       return savedPosition
     }
-    return { top: 0 }
+    return new Promise((resolve) => {
+      nextTick(() => {
+        const appMain = document.getElementById('app-main')
+        if (appMain) {
+          appMain.scrollTop = 0
+        }
+        resolve({ top: 0 })
+      })
+    })
   },
 })
 
