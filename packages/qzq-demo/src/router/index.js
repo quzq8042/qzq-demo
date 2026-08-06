@@ -142,11 +142,11 @@ export const constantRoutes = [
             component: () => import('@/views/cnc/special-tool-creation/index'),
             name: 'SpecialToolCreation',
             meta: {
-              title: '特殊刀具创建',
-              icon: 'QuestionFilled',
-              description: '特殊刀具创建指南，助您快速掌握 CNC 加工技能',
+              title: '特殊刀具创建模板',
+              icon: 'MagicStick',
+              description: '内R刀、T型刀、燕尾刀、螺纹刀 四类特殊刀具的创建模板与参数说明',
               requireQz: true,
-              tags: ['特殊刀具创建'],
+              tags: ['特殊刀具', '创建模板', '内R刀', 'T型刀', '燕尾刀', '螺纹刀'],
             },
           },
           {
