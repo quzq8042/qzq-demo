@@ -1,7 +1,7 @@
 <template>
   <div class="calculator-container">
     <PageHeader />
-    <el-tabs v-model="activeTab" type="card" class="calculator-tabs">
+    <el-tabs v-model="activeTab" class="calculator-tabs">
       <el-tab-pane label="材料重量" name="weight">
         <MaterialWeightCalculator />
       </el-tab-pane>
@@ -20,6 +20,12 @@
       <el-tab-pane label="螺纹加工" name="thread">
         <ThreadCalculator />
       </el-tab-pane>
+      <el-tab-pane label="曲面优化" name="surface">
+        <SurfaceOptimization />
+      </el-tab-pane>
+      <el-tab-pane label="刀具寿命" name="toolLife">
+        <ToolLifeCalculator />
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -33,62 +39,69 @@ import BallnoseStepHeightCalculator from './components/BallnoseStepHeightCalcula
 import CuttingForceCalculator from './components/CuttingForceCalculator/index.vue'
 import UnitConverter from './components/UnitConverter/index.vue'
 import ThreadCalculator from './components/ThreadCalculator/index.vue'
+import SurfaceOptimization from './components/SurfaceOptimization/index.vue'
+import ToolLifeCalculator from './components/ToolLifeCalculator/index.vue'
 
 const activeTab = ref('weight')
 </script>
 
-<style lang="scss" scoped>
-.calculator-container {
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 100vh;
-}
-.calculator-tabs {
+<style lang="scss">
+.calculator-container .calculator-tabs {
   margin: 0 auto;
   background: #fff;
   border-radius: 12px;
   padding: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
 
-  :deep(.el-tabs__header) {
-    margin-bottom: 16px;
-    background: #f8f9fb;
-    border-radius: 8px;
-    padding: 6px;
-  }
+.calculator-container .calculator-tabs .el-tabs__header {
+  margin-bottom: 0;
+  background: #f8f9fb;
+  border-radius: 10px;
+  padding: 6px;
+  border: none;
+}
 
-  :deep(.el-tabs__nav-wrap::after) {
-    display: none;
-  }
+.calculator-container .calculator-tabs .el-tabs__nav-wrap::after {
+  display: none;
+}
 
-  :deep(.el-tabs__item) {
-    padding: 0 20px;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 6px;
-    height: 36px;
-    line-height: 36px;
-    transition: all 0.3s ease;
-    border: none;
+.calculator-container .calculator-tabs .el-tabs__nav {
+  border: none;
+}
 
-    &:hover {
-      background: rgba(102, 126, 234, 0.1);
-    }
-  }
+.calculator-container .calculator-tabs .el-tabs__item {
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  height: 36px;
+  line-height: 36px;
+  transition: all 0.3s ease;
+  border: none !important;
+  color: #606266;
+}
 
-  :deep(.el-tabs__item.is-active) {
-    color: #fff;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-  }
+.calculator-container .calculator-tabs .el-tabs__item:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
 
-  :deep(.el-tabs__active-bar) {
-    display: none;
-  }
+.calculator-container .calculator-tabs .el-tabs__item.is-active {
+  color: #fff !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
 
-  :deep(.el-tabs__content) {
-    padding: 16px 8px;
-  }
+.calculator-container .calculator-tabs .el-tabs__active-bar {
+  display: none;
+}
+
+.calculator-container .calculator-tabs .el-tabs__content {
+  padding: 16px 4px;
+}
+
+.calculator-container .calculator-tabs .el-tab-pane {
+  display: block;
 }
 </style>

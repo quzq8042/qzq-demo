@@ -64,9 +64,7 @@
             <div v-for="(project, index) in resumeData.projects" :key="index" class="project-item">
               <h3>项目{{ numMap[index + 1] }}：{{ project.name }}</h3>
               <p class="project-desc">
-                技术栈：<span v-for="(tag, idx) in project.technologies" :key="idx"
-                  >{{ tag }}{{ idx < project.technologies.length - 1 ? ' + ' : '' }}</span
-                >
+                技术栈：<span v-for="(tag, idx) in project.technologies" :key="idx">{{ tag }}{{ idx < project.technologies.length - 1 ? ' + ' : '' }}</span>
               </p>
               <p class="project-desc">项目描述：{{ project.description }}</p>
               <div v-for="(desc, idx) in project.experience" :key="idx" class="timeline-desc">
@@ -175,7 +173,7 @@ const handleClick = (link) => {
   }
 
   &:last-child {
-    padding-right: 0;
+    // padding-right: 0;
 
     &::after {
       display: none;
