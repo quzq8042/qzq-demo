@@ -5,30 +5,12 @@
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
       <h2 class="login-title"><img class="logo" src="../assets/images/logo.webp" alt="logo" />工设绘记</h2>
       <el-form-item prop="username">
-        <el-input
-          v-model="loginForm.username"
-          type="text"
-          size="large"
-          auto-complete="off"
-          placeholder="账号"
-          @keyup.enter="handleLogin"
-          @focus="handleUsernameFocus"
-          @blur="handleUsernameBlur"
-        >
+        <el-input v-model="loginForm.username" type="text" size="large" auto-complete="off" placeholder="账号" @keyup.enter="handleLogin" @focus="handleUsernameFocus" @blur="handleUsernameBlur">
           <template #prefix><svg-icon icon-class="loginuser" class="el-input__icon input-icon" /></template>
         </el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input
-          v-model="loginForm.password"
-          type="password"
-          size="large"
-          auto-complete="off"
-          placeholder="密码"
-          @keyup.enter="handleLogin"
-          @focus="handlePasswordFocus"
-          @blur="handlePasswordBlur"
-        >
+        <el-input v-model="loginForm.password" type="password" size="large" auto-complete="off" placeholder="密码" @keyup.enter="handleLogin" @focus="handlePasswordFocus" @blur="handlePasswordBlur">
           <template #prefix><svg-icon icon-class="loginpass" class="el-input__icon input-icon" /></template>
         </el-input>
       </el-form-item>
@@ -55,19 +37,16 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import Calendar from '@/components/Calendar/index.vue'
 import LoginAnimation from '@/components/LoginAnimation/index.vue'
+import { validateUser } from '@/config/userConfig'
 
 const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
 const { proxy } = getCurrentInstance()
-const logins = {
-  username: import.meta.env.VITE_APP_LOGINNAME_USER,
-  username1: import.meta.env.VITE_APP_LOGINNAME_ADMIN,
-  password: import.meta.env.VITE_APP_PASSWORD,
-}
+
 const loginForm = ref({
-  username: logins.username,
-  password: logins.password,
+  username: 'cnc10086',
+  password: 'admin123',
 })
 
 const loginRules = {
@@ -100,16 +79,9 @@ function handleLogin() {
       loading.value = true
 
       loginForm.value.username = loginForm.value.username.trim()
-      // 调用action的登录方法
-      const validUsers = [
-        { username: logins.username, password: logins.password },
-        { username: logins.username1, password: logins.password },
-      ]
-      const isValidUser = validUsers.some(
-        (user) => user.username === loginForm.value.username && user.password === loginForm.value.password
-      )
-      if (!isValidUser) {
-        ElMessage.error('账号或密码错误')
+      const result = validateUser(loginForm.value.username, loginForm.value.password)
+      if (!result.ok) {
+        ElMessage.error(result.reason)
         loading.value = false
         return
       }
@@ -164,8 +136,7 @@ function handleLogin() {
     text-align: center;
     margin-bottom: 30px;
     letter-spacing: 4px;
-    text-shadow: 0 0 10px rgba(135, 206, 250, 0.8), 0 0 20px rgba(135, 206, 250, 0.6), 0 0 30px rgba(135, 206, 250, 0.4),
-      0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 0 10px rgba(135, 206, 250, 0.8), 0 0 20px rgba(135, 206, 250, 0.6), 0 0 30px rgba(135, 206, 250, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
     .logo {
       width: 32px;
       height: 32px;

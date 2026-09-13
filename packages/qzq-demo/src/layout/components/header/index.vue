@@ -24,14 +24,10 @@
 import { SwitchButton } from '@element-plus/icons-vue'
 import TimePicker from '@/components/TimePicker/index.vue'
 import useUserStore from '@/store/modules/user'
-import { getToken } from '@/utils/auth'
-import { decrypt } from '@/utils/jsencrypt'
+import { hasAccessToRoute } from '@/config/userConfig'
 const router = useRouter()
 
 const navRoutes = computed(() => {
-  const token = getToken()
-  const isQz = token ? decrypt(token) === import.meta.env.VITE_APP_LOGINNAME_ADMIN : false
-
   return router.options.routes
     .flatMap((route) => {
       if (route.children && route.children.length > 0) {
@@ -39,7 +35,7 @@ const navRoutes = computed(() => {
           if (child.hidden) {
             return false
           }
-          if (!isQz && child.meta?.requireQz) {
+          if (!hasAccessToRoute(child.path)) {
             return false
           }
           return true
@@ -48,7 +44,7 @@ const navRoutes = computed(() => {
       if (route.hidden) {
         return []
       }
-      if (!isQz && route.meta?.requireQz) {
+      if (!hasAccessToRoute(route.path)) {
         return []
       }
       return [route]

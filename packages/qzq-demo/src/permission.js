@@ -3,22 +3,26 @@ import { ElMessage } from 'element-plus'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
-import { decrypt } from '@/utils/jsencrypt'
+import { hasAccessToRoute, getCurrentUser, isUserExpired } from '@/config/userConfig'
 
 NProgress.configure({ showSpinner: false })
 
 const whiteList = ['/login', '/']
 router.beforeEach((to, from, next) => {
   NProgress.start()
-  // next()
   if (getToken()) {
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const token = getToken()
-      const isQz = token ? decrypt(token) === import.meta.env.VITE_APP_LOGINNAME_ADMIN : false
-      if (to.meta.requireQz && !isQz) {
+      const user = getCurrentUser()
+      if (!user || isUserExpired(user)) {
+        ElMessage.warning(!user ? '登录状态已失效，请重新登录' : '账号已过期，请联系管理员')
+        next(`/login?redirect=${encodeURIComponent(to.fullPath)}`)
+        NProgress.done()
+        return
+      }
+      if (!hasAccessToRoute(to.path)) {
         next('/401')
         return
       }
