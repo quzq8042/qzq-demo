@@ -66,4 +66,13 @@ app.use(ElementPlus, {
   size: Cookies.get('size') || 'default',
 })
 
+// 全局禁用 el-table 表头列宽拖拽
+import { ElTable, ElTableColumn } from 'element-plus'
+const patchResizable = (comp) => {
+  if (!comp?.props?.resizable) return
+  comp.props.resizable = { ...comp.props.resizable, default: false }
+}
+patchResizable(ElTable)
+patchResizable(ElTableColumn)
+
 app.mount('#app')

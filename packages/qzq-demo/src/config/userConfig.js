@@ -20,7 +20,7 @@ const THREE_MONTHS = 3 * 30 * 24 * 60 * 60 * 1000
 export const userList = [
   {
     username: 'qz',
-    password: 'admin123',
+    password: 'qz123',
     expireTime: null,
     denyModules: [],
     remark: '超级管理员，所有模块均可访问',

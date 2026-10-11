@@ -211,6 +211,17 @@ export const constantRoutes = [
               tags: ['材料', '力学性能', '物理属性', '加工性'],
             },
           },
+          {
+            path: '/cnc/cnc-materials',
+            component: () => import('@/views/cnc/cnc-materials/index'),
+            name: 'CncMaterials',
+            meta: {
+              title: 'CNC资料',
+              icon: 'Collection',
+              description: 'CNC 数控相关学习资料、视频教程、手册文档下载，支持关键词搜索',
+              tags: ['资料', '下载', '教程', '手册'],
+            },
+          },
         ],
       },
       {
