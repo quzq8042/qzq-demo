@@ -1,0 +1,211 @@
+<template>
+  <div class="tab-content">
+    <PageHeader />
+    <div class="version-banner">
+      <span class="version-tag">UG NX 2306</span>
+      <span class="version-desc">四轴加工模块 · 多轴加工工艺参考手册</span>
+    </div>
+    <div class="strategy-categories">
+      <div v-for="category in ug2306Categories" :key="category.name">
+        <div v-if="category.features?.length" class="category-card">
+          <div class="category-header">
+            <span class="category-icon">{{ category.icon }}</span>
+            <div class="category-info">
+              <h3>{{ category.name }}（{{ category.features.length }}）</h3>
+              <span class="category-label">{{ category.chinese }}</span>
+            </div>
+          </div>
+          <div v-if="category.tips" class="category-tips">
+            <span class="tip-icon">💡</span>
+            <span>{{ category.tips }}</span>
+          </div>
+          <div class="feature-list">
+            <div v-for="(feature, index) in category.features" :key="index" class="feature-item" @click="goToDetail(category.name, feature.name)">
+              <span class="feature-icon">{{ feature.icon || '📋' }}</span>
+              <div class="feature-content">
+                <span class="feature-name">{{ feature.name }}</span>
+                <span class="feature-desc">{{ feature.description }}</span>
+              </div>
+              <span class="arrow-icon">→</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+import PageHeader from '../components/PageHeader.vue'
+import { ug2306Categories } from './data/index.js'
+
+const router = useRouter()
+
+const goToDetail = (category, feature) => {
+  router.push(`/cnc/ug2306/detail/${category}/${encodeURIComponent(feature)}`)
+}
+</script>
+
+<style lang="scss" scoped>
+.tab-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.version-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border-radius: 12px;
+  color: #fff;
+
+  .version-tag {
+    background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .version-desc {
+    font-size: 14px;
+    opacity: 0.85;
+  }
+}
+
+.strategy-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 4px solid #667eea;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+  }
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  .category-icon {
+    font-size: 28px;
+  }
+
+  .category-info {
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .category-label {
+      font-size: 12px;
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+  }
+}
+
+.category-tips {
+  margin: 10px 0;
+  padding: 12px;
+  background: #fff3cd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #856404;
+
+  .tip-icon {
+    font-size: 16px;
+  }
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+
+  &:hover {
+    background: #f0f5ff;
+    border-color: #667eea;
+    transform: translateX(4px);
+  }
+
+  .feature-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .feature-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .feature-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .feature-desc {
+      font-size: 12px;
+      color: #888;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  .arrow-icon {
+    font-size: 16px;
+    color: #ccc;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+
+  &:hover .arrow-icon {
+    color: #667eea;
+  }
+}
+</style>

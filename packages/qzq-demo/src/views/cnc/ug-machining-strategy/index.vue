@@ -2,26 +2,28 @@
   <div class="tab-content">
     <PageHeader />
     <div class="strategy-categories">
-      <div v-for="category in strategyCategories" :key="category.name" class="category-card">
-        <div class="category-header">
-          <span class="category-icon">{{ category.icon }}</span>
-          <div class="category-info">
-            <h3>{{ category.name }}（{{ category.features.length }}）</h3>
-            <span class="category-label">{{ category.chinese }}</span>
-          </div>
-        </div>
-        <div v-if="category.tips" class="category-tips">
-          <span class="tip-icon">💡</span>
-          <span>{{ category.tips }}</span>
-        </div>
-        <div class="feature-list">
-          <div v-for="(feature, index) in category.features" :key="index" class="feature-item" @click="goToDetail(category.name, feature.name)">
-            <span class="feature-icon"><img :src="feature.icon" alt="feature-icon" /></span>
-            <div class="feature-content">
-              <span class="feature-name">{{ feature.name }}</span>
-              <span class="feature-desc">{{ feature.description }}</span>
+      <div v-for="category in strategyCategories" :key="category.name">
+        <div v-if="category.features?.length" class="category-card">
+          <div class="category-header">
+            <span class="category-icon">{{ category.icon }}</span>
+            <div class="category-info">
+              <h3>{{ category.name }}（{{ category.features.length }}）</h3>
+              <span class="category-label">{{ category.chinese }}</span>
             </div>
-            <span class="arrow-icon">→</span>
+          </div>
+          <div v-if="category.tips" class="category-tips">
+            <span class="tip-icon">💡</span>
+            <span>{{ category.tips }}</span>
+          </div>
+          <div class="feature-list">
+            <div v-for="(feature, index) in category.features" :key="index" class="feature-item" @click="goToDetail(category.name, feature.name)">
+              <span class="feature-icon"><img :src="feature.icon" alt="feature-icon" /></span>
+              <div class="feature-content">
+                <span class="feature-name">{{ feature.name }}</span>
+                <span class="feature-desc">{{ feature.description }}</span>
+              </div>
+              <span class="arrow-icon">→</span>
+            </div>
           </div>
         </div>
       </div>

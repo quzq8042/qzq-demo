@@ -80,6 +80,24 @@ export const constantRoutes = [
             hidden: true,
           },
           {
+            path: '/cnc/ug2306',
+            component: () => import('@/views/cnc/ug2306/index'),
+            name: 'Ug2306',
+            meta: {
+              title: 'UG2306',
+              icon: 'Setting',
+              description: 'UG NX 2306 四轴加工模块工艺手册，涵盖定轴加工、多轴加工、刀轴控制、投影矢量、避让光顺、去毛刺倒角等核心功能的参数配置与操作指南',
+              tags: ['UG2306', '四轴', '多轴', '加工', '刀轴', '避让'],
+            },
+          },
+          {
+            path: '/cnc/ug2306/detail/:category/:feature',
+            component: () => import('@/views/cnc/ug2306/detail/index'),
+            name: 'Ug2306Detail',
+            meta: { title: 'UG2306加工详情', icon: 'Setting', description: 'UG NX 2306 加工策略详细参数配置与工艺说明' },
+            hidden: true,
+          },
+          {
             path: '/cnc/calculator',
             component: () => import('@/views/cnc/calculator/index'),
             name: 'Calculator',
