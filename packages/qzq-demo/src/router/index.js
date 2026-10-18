@@ -153,6 +153,17 @@ export const constantRoutes = [
             },
           },
           {
+            path: '/cnc/operation-method',
+            component: () => import('@/views/cnc/operation-method/index'),
+            name: 'OperationMethod',
+            meta: {
+              title: '操作方法',
+              icon: 'Operation',
+              description: '3 轴虎钳一夹二夹、4 轴三爪圆柱、4 轴桥板、4 轴 L 板四类典型装夹操作方法，含分中取数、找 A 轴旋转中心、Z 落差补偿核心步骤',
+              tags: ['装夹', '分中', 'Z落差', '4轴', '虎钳', '三爪', '桥板', 'L板'],
+            },
+          },
+          {
             path: '/cnc/ug-shortcut-key',
             component: () => import('@/views/cnc/ug-shortcut-key/index'),
             name: 'UGShortcutKey',

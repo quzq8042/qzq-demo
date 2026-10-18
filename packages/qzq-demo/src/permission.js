@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
-import { hasAccessToRoute, getCurrentUser, isUserExpired } from '@/config/userConfig'
+import { hasAccessToRoute, getCurrentUser } from '@/config/userConfig'
 
 NProgress.configure({ showSpinner: false })
 
@@ -16,8 +16,8 @@ router.beforeEach((to, from, next) => {
       NProgress.done()
     } else {
       const user = getCurrentUser()
-      if (!user || isUserExpired(user)) {
-        ElMessage.warning(!user ? '登录状态已失效，请重新登录' : '账号已过期，请联系管理员')
+      if (!user) {
+        ElMessage.warning('登录状态已失效，请重新登录')
         next(`/login?redirect=${encodeURIComponent(to.fullPath)}`)
         NProgress.done()
         return

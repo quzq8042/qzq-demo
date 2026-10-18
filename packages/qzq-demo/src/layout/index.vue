@@ -6,7 +6,7 @@
     <div id="app-main">
       <router-view v-slot="{ Component, route }">
         <keep-alive :include="tagsViewStore.cachedViews">
-          <component :is="Component" v-if="!route.meta.link" :key="route.path" />
+          <component :is="Component" v-if="!route.meta.link" :key="route.matched[1]?.path || route.path" />
         </keep-alive>
       </router-view>
     </div>

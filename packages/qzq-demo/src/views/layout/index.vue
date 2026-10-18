@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper">
-    <nav v-if="navRoutes.length > 0">
+    <nav v-if="navRoutes.length > 0" ref="navRef">
       <el-menu :default-active="defaultActive" class="el-menu-vertical-demo" @select="handleOpen">
         <el-menu-item v-for="route in navRoutes" :key="route.path" :index="route.path">
           <span>{{ route.meta.title }}</span>
@@ -15,11 +15,11 @@
 
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
-import { watch, ref, computed } from 'vue'
+import { watch, ref, computed, nextTick } from 'vue'
 import { hasAccessToRoute } from '@/config/userConfig'
 
 const defaultActive = ref('')
-const navRoutes = ref([])
+const navRef = ref(null)
 const router = useRouter()
 const route = useRoute()
 
@@ -38,26 +38,38 @@ const findParentRoute = (routes, currentPath) => {
   return null
 }
 
-const updateNavRoutes = (currentPath) => {
-  const parentRoute = findParentRoute(router.options.routes, currentPath)
+const parentRoutePath = computed(() => {
+  const parentRoute = findParentRoute(router.options.routes, route.path)
+  return parentRoute ? parentRoute.path : ''
+})
+
+const navRoutes = computed(() => {
+  const parentRoute = findParentRoute(router.options.routes, parentRoutePath.value)
   if (parentRoute && parentRoute.children && parentRoute.children.length > 0) {
-    navRoutes.value = parentRoute.children
+    return parentRoute.children
       .filter((child) => !child.hidden)
       .filter((child) => hasAccessToRoute(child.path))
       .filter((child) => child.meta && child.meta.title)
-  } else {
-    navRoutes.value = []
   }
-}
+  return []
+})
 
 watch(
   () => route.path,
   (newPath) => {
     defaultActive.value = newPath
-    updateNavRoutes(newPath)
   },
   { immediate: true }
 )
+
+watch(parentRoutePath, () => {
+  const savedScrollTop = navRef.value?.scrollTop
+  nextTick(() => {
+    if (navRef.value && savedScrollTop != null) {
+      navRef.value.scrollTop = savedScrollTop
+    }
+  })
+})
 
 const handleOpen = (key) => {
   router.push({ path: key })
