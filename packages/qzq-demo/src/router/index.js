@@ -44,6 +44,12 @@ export const constantRoutes = [
         meta: { title: '个人简历', icon: 'dashboard', affix: true },
       },
       {
+        path: '/index2',
+        component: () => import('@/views/home2/index'),
+        name: 'Home2',
+        meta: { title: '个人简历', icon: 'dashboard', affix: true },
+      },
+      {
         path: '/cnc',
         component: ViewLayout,
         name: 'cnc',

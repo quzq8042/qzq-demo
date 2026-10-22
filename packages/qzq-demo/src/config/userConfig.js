@@ -23,7 +23,7 @@ export const userList = [
   {
     username: 'cnc10086',
     password: 'admin123',
-    denyModules: ['/index', '/front-end'],
+    denyModules: ['/index', '/index2', '/front-end'],
     remark: 'CNC 专用账号，禁止简历和前端模块',
   },
 ]
