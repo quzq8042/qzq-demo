@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 头部导航 -->
-    <!-- <Header /> -->
+    <Header />
 
     <div id="app-main">
       <router-view v-slot="{ Component, route }">
