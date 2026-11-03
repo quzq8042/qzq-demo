@@ -227,7 +227,7 @@ import { resumeData } from './data'
 
 .info-label {
   display: inline-block;
-  min-width: 80px;
+  min-width: 75px;
   color: #888;
   background: #f5f7fa;
   padding: 4px 10px;
@@ -243,7 +243,7 @@ import { resumeData } from './data'
   &.highlight {
     color: #4a69bd;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
   }
 }
 

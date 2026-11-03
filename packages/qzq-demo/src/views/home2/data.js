@@ -10,8 +10,7 @@ export const resumeData = {
     workExperience: '2年',
   },
   jobIntention: {
-    position: 'CNC编程或编程+调机',
-    salary: '8K-12K',
+    position: 'CNC数控操机/编程员',
     city: '深圳',
     employmentType: '全职',
     availableTime: '随时到岗',
@@ -20,14 +19,16 @@ export const resumeData = {
   selfEvaluation: ['本人有较强的工作责任心及端正的工作态度，具有较强的团队携作能力和良好的敬业精神，能够及时有效的解决在实际工作中遇到的各种问题。有较强的动手能力及学习能力，对待新的环境能很快适应，本人对数控行业具有浓烈的兴趣，并致力于在数控加工行业要有所发展并取得一定的成就。'],
   experience: [
     {
-      company: '海德盟数控技术（深圳）有限公司',
-      position: 'CNC编程',
-      date: '2025.07 - 2026.10',
+      company: '金和精密机械有限公司',
+      position: 'CNC数控操机/编程员',
+      date: '2025.04 - 2026.06',
+      description: ['1.负责CNC数控系统的编程及调机任务，与客户合作，解决客户问题，确保客户满意度。', '2.根据客户需求，优化加工工艺流程，提高生产效率和产品质量;', '3.参与新产品的开发和工艺改进，提供技术支持和建议。'],
     },
     {
       company: '深圳市华昌精密有限公司',
-      position: 'CNC操机',
-      date: '2025.03 - 2025.07',
+      position: 'CNC数控操机/编程员',
+      date: '2024.03 - 2025.04',
+      description: ['1.独立完成CNC程序的编写与调试，确保加工精度和效率;', '2.根据图纸要求调整加工参数，优化工艺流程;', '3.协助解决生产过程中的技术问题，提升设备利用率;'],
     },
   ],
 }
